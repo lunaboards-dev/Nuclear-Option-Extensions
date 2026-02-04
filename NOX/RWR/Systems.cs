@@ -73,7 +73,7 @@ public static class Systems
     }
 
     public static MaskedRWR Helicopter = new(false, Threats.RWRThreatType.FCS | Threats.RWRThreatType.AAA | Threats.RWRThreatType.SAM | Threats.RWRThreatType.Ship);
-    public static MaskedRWR Fighter = new (false, Threats.RWRThreatType.AirIntercept);
+    public static MaskedRWR Fighter = new (true, Threats.RWRThreatType.AirIntercept);
 
     public class BandRWR : IRWRSystem
     {
