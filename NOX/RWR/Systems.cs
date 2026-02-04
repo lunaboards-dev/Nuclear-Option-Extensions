@@ -22,6 +22,7 @@ public static class Systems
         var pos2 = threat.GlobalPosition();
 
         var dif = pos2.AsVector3()-pos1.AsVector3();
+        var dif_norm = self.transform.InverseTransformDirection(dif.normalized);
         var local = self.transform.InverseTransformPoint(pos2.AsVector3());
         var norm = local.normalized;
 
@@ -34,9 +35,9 @@ public static class Systems
 
         float dist_len = dif.magnitude;
         
-        float azimuth = Mathf.Atan2(norm.z, norm.x);
+        float azimuth = Mathf.Atan2(dif_norm.z, dif_norm.x);
 
-        float elevation = Mathf.Rad2Deg * Mathf.Atan2(local.y, dist_len);
+        float elevation = Mathf.Rad2Deg * Mathf.Atan2(dif_norm.y, dist_len);
 
         return ((float)azimuth, dist_len, (float)elevation);
     }
