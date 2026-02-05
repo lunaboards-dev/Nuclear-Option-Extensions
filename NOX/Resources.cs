@@ -16,20 +16,21 @@ public static class Resources
 
     public static void Init()
     {
-        
-        RWRBaseTex = LoadTex("base.png", 300, 300);
-        RWRContact = LoadTex("contact.png", 43, 43);
-        RWRContactLo = LoadTex("contact_lo.png", 43, 43);
-        RWRContactHi = LoadTex("contact_hi.png", 43, 43);
+        int base_size = 600;
+        int contact_size = 86;
+        RWRBaseTex = LoadTex("base.png", base_size, base_size);
+        RWRContact = LoadTex("contact.png", contact_size, contact_size);
+        RWRContactLo = LoadTex("contact_lo.png", contact_size, contact_size);
+        RWRContactHi = LoadTex("contact_hi.png", contact_size, contact_size);
 
         AllFonts();
 
-        Font = UnityEngine.Resources.Load<Font>("Font/regular.otf");//GetBuiltinResource<Font>("Font/regular_cozy.otf");
+        /*Font = UnityEngine.Resources.Load<Font>("Font/regular.otf");//GetBuiltinResource<Font>("Font/regular_cozy.otf");
         if (Font == null)
         {
-            Plugin.Logger.LogError("Font not found!");
-            Font = UnityEngine.Resources.GetBuiltinResource<Font>("Arial.ttf");
-        }
+            Plugin.Logger.LogError("Font not found!");*/
+        Font = UnityEngine.Resources.GetBuiltinResource<Font>("Arial.ttf"); // temporary until the actual font is loaded
+        //}
     }
 
     static Texture2D LoadTex(string path, int w, int h)

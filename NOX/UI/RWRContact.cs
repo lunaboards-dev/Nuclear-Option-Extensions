@@ -14,6 +14,8 @@ public class RWRContact : MonoBehaviour
     CanvasRenderer Cr;
     RawImage RWRBase;
     GameObject label_holder;
+    GameObject track_line;
+    Image line;
     public Text label;
     public RWRDisplay Parent;
     float time_to_die;
@@ -33,6 +35,7 @@ public class RWRContact : MonoBehaviour
         RWRBase = gameObject.AddComponent<RawImage>();
         RWRBase.texture = Resources.RWRContact;
         RWRBase.material = new Material(Shader.Find("UI/Default"));
+        RWRBase.color = Color.green;
 
         label_holder = new GameObject("NOXContactLabel");
         label = label_holder.AddComponent<Text>();
@@ -49,6 +52,14 @@ public class RWRContact : MonoBehaviour
 
         label_holder.SetActive(true);
 
+        /*track_line = new GameObject("NOXContactLine");
+        line = track_line.AddComponent<Image>();
+        line.material = new Material(Shader.Find("UI/Default"));
+        line.color = Color.green;
+        line.enabled = true;
+
+        track_line.SetActive(true);*/
+
         time_to_die = Time.timeSinceLevelLoad+3;
     }
 
@@ -57,6 +68,11 @@ public class RWRContact : MonoBehaviour
         float x = Mathf.Cos(contact.Direction);
         float y = Mathf.Sin(contact.Direction);
         float dist = Mathf.Max(Mathf.Min(30f+((contact.Distance/20000)*80), 110), 30);
+
+        /*track_line.transform.localScale = new Vector3(1, dist, 1);
+        track_line.transform.position = Parent.Tf.position + (new Vector3(x, y, 0)*(dist/2));
+        track_line.transform.eulerAngles = new Vector3(0, 0, contact.Direction*Mathf.Rad2Deg);*/
+
         SetPos(new Vector3(x, y, 0)*dist);
         SetText(contact.ID);
         if (contact.Elevation <= -10f)
@@ -101,10 +117,10 @@ public class RWRContact : MonoBehaviour
     {
         if (Lock)
         {
-            Color c = Color.red;
-            c.a = ((Time.timeSinceLevelLoad*4)%1) > 0.5 ? 1 : 0;
+            Color c = ((Time.timeSinceLevelLoad*4)%1) > 0.5 ? Color.red : Color.yellow;
             label.color = c;
-            RWRBase.color = Color.white;
+            RWRBase.color = c;
+            //line.color = c;
             if (tracked != null)
             {
                 var threat = AddRWRHUDApp.Instance.System.ThreatID(tracked);
@@ -119,9 +135,8 @@ public class RWRContact : MonoBehaviour
             Color c = Color.green;
             c.a = alpha;
             label.color = c;
-            c = RWRBase.color;
-            c.a = alpha;
             RWRBase.color = c;
+            //line.color = c;
         }
         label.transform.position = Tf.position;
     }
@@ -130,5 +145,14 @@ public class RWRContact : MonoBehaviour
     {
         time_to_die = Time.timeSinceLevelLoad+3;
         
+    }
+
+    public void Destroy()
+    {
+        if (Parent == null) return;
+        Lock = false;
+        time_to_die = 0;
+        label.enabled = false;
+        RWRBase.enabled = false;
     }
 }

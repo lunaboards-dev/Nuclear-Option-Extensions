@@ -34,6 +34,8 @@ public class RWRDisplay : MonoBehaviour
         RWRBase = gameObject.AddComponent<RawImage>();
         RWRBase.texture = Resources.RWRBaseTex;
         RWRBase.material = new Material(Shader.Find("UI/Default"));
+        RWRBase.color = Color.green;
+
         System = FullRWR.Instance;
     }
 
@@ -81,5 +83,15 @@ public class RWRDisplay : MonoBehaviour
         var contact = Ping(unit);
         contact.Lock = status;
         contact.tracked = unit;
+    }
+
+    public void Reset()
+    {
+        foreach (var pair in Contacts)
+        {
+            pair.Key.Destroy();
+        }
+        Contacts.Clear();
+        TrackedContacts.Clear();
     }
 }

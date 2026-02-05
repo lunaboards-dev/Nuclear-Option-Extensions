@@ -7,6 +7,38 @@ namespace NOX.RWR;
 
 public static class Systems
 {
+    public static string[] RandomContacts = [
+        "C22",
+        "T30",
+        "A19",
+        "F20",
+        "F12",
+        "H90",
+        "H46",
+        "V49",
+        "E25",
+        "K67",
+        "B81",
+        "9K4",
+        "R9",
+
+        // random bullshit from IRL
+        "SA2",
+        "F14",
+        // idk i'll add more later
+    ];
+
+    static string RandomContact()
+    {
+        return RandomContacts[UnityEngine.Random.RandomRangeInt(0, RandomContacts.Length)];
+    }
+
+    static string RandomLetter()
+    {
+        char letter = (char)('A' + UnityEngine.Random.RandomRangeInt(0, 26));
+        return letter.ToString();
+    }
+
     public struct RWRThreat
     {
         public string ID;
@@ -37,7 +69,7 @@ public static class Systems
         
         float azimuth = Mathf.Atan2(dif_norm.z, dif_norm.x);
 
-        float elevation = Mathf.Rad2Deg * Mathf.Atan2(dif_norm.y, dist_len);
+        float elevation = Mathf.Rad2Deg * Mathf.Atan2(dif_norm.y, dif_norm.magnitude);
 
         return ((float)azimuth, dist_len, (float)elevation);
     }
@@ -59,7 +91,7 @@ public static class Systems
                     Elevation = PassElevation ? direction.Elevation : 0,
                     Direction = direction.Direction,
                     Distance = direction.Distance,
-                    ID = threat.Display
+                    ID = Plugin.PlayerJammed ? RandomContact() : threat.Display
                 };
             }
             return new()
@@ -67,7 +99,7 @@ public static class Systems
                 Elevation = PassElevation ? direction.Elevation : 0,
                 Direction = direction.Direction,
                 Distance = direction.Distance,
-                ID = Threats.ThreatLookup[threat.Class]
+                ID = Plugin.PlayerJammed ? RandomLetter() : Threats.ThreatLookup[threat.Class]
             };
         }
     }
@@ -78,6 +110,7 @@ public static class Systems
     public class BandRWR : IRWRSystem
     {
         public static BandRWR Instance = new();
+
         public RWRThreat ThreatID(Unit unit)
         {
             var threat = Threats.IdentifyThreat(unit);
@@ -87,7 +120,7 @@ public static class Systems
                 Elevation = 0,
                 Direction = direction.Direction,
                 Distance = direction.Distance,
-                ID = threat.Band
+                ID = Plugin.PlayerJammed ? RandomLetter() : threat.Band
             };
         }
     }
@@ -104,7 +137,7 @@ public static class Systems
                 Elevation = direction.Elevation,
                 Direction = direction.Direction,
                 Distance = direction.Distance,
-                ID = threat.Display
+                ID = Plugin.PlayerJammed ? RandomContact() : threat.Display
             };
         }
     }

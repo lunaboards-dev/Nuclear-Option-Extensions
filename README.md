@@ -7,10 +7,10 @@ This mod brings fully featured RWRs with threat identification (on most aircraft
 
 ### RWR types
 
-* **Band only:** The most basic RWR that can only identify the band of the radar emission, though it will correctly identify ARH missiles. It does not feature elevation indication.
-* **Helicopter:** This RWR only gives detailed threat ID on ground-based threats, and features no elevation indication.
-* **Fighter:** This RWR only gives detailed threat ID on other fighter radars, but also features relative elevation indication.
-* **Full:** This RWR gives detailed threat ID on all sources and features relative elevation indication.
+* **Band only:** The most basic RWR that can only identify the band of the radar emission, though it will correctly identify ARH missiles. It does not feature elevation indication. The Cricket and Compass have this type of RWR.
+* **Helicopter:** This RWR only gives detailed threat ID on ground-based threats, and features no elevation indication. All helicopters have this RWR.
+* **Fighter:** This RWR only gives detailed threat ID on other fighter radars, but also features relative elevation indication. The FS-12 and FS-20 have this type of RWR.
+* **Full:** This RWR gives detailed threat ID on all sources and features relative elevation indication. The Brawler, Ifrit, Medusa, and Darkreach have this type of RWR.
 
 ### Threat types
 * **AI:** (Air Intercept) A fighter radar

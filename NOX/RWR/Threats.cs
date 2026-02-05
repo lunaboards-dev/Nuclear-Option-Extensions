@@ -15,6 +15,7 @@ public static class Threats
         Ship = 32,
         FCS = 64,
         EarlyWarning = 128,
+        Missile = 256,
         Unknown = 0x8000
     }
     public static Dictionary<RWRThreatType, string> ThreatLookup = new()
@@ -27,6 +28,7 @@ public static class Threats
         {RWRThreatType.Ship, "NVL"},
         {RWRThreatType.FCS, "FCS"},
         {RWRThreatType.EarlyWarning, "EWR"},
+        {RWRThreatType.Missile, "MSL"},
         {RWRThreatType.Unknown, "?"}
     };
     public struct RWRThreatID
@@ -48,8 +50,16 @@ public static class Threats
     {
         Name = "",
         Display = "?",
-        Band = "I",
+        Band = "H",
         Class = RWRThreatType.Unknown
+    };
+
+    public static RWRThreatID Missile = new()
+    {
+        Name = "",
+        Display = "MSL",
+        Band = "I",
+        Class = RWRThreatType.Missile
     };
 
     public static RWRThreatID[] ThreatList = [
@@ -97,9 +107,9 @@ public static class Threats
         },
         new RWRThreatID {
             Name = "Truck2-R",
-            Display = "MSV",
+            Display = "R9", //"MSV",
             Band = "C",
-            Class = RWRThreatType.EarlyWarning
+            Class = RWRThreatType.SAM
         },
         new RWRThreatID {
             Name = "RadarContainer1",
@@ -117,7 +127,25 @@ public static class Threats
             Name = "Truck2-RSAM",
             Display = "R9",
             Band = "J",
-            Class = RWRThreatType.FCS
+            Class = RWRThreatType.SAM
+        },
+        new RWRThreatID {
+            Name = "Multirole1",
+            Display = "K67",
+            Band = "I",
+            Class = RWRThreatType.AirIntercept
+        },
+        new RWRThreatID {
+            Name = "SAMTurret1",
+            Display = "9K4",
+            Band = "K",
+            Class = RWRThreatType.SAM
+        },
+        new RWRThreatID {
+            Name = "SAMTrailer1",
+            Display = "R9",
+            Band = "J",
+            Class = RWRThreatType.SAM
         }
     ];
 
@@ -128,6 +156,8 @@ public static class Threats
 
     public static RWRThreatID IdentifyThreat(Unit unit)
     {
+        if (unit is Missile)
+            return Missile;
         if (Ships.Contains(unit.name))
             return Ship;
         foreach (var t in ThreatList)
