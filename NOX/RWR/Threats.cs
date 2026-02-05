@@ -113,9 +113,9 @@ public static class Threats
         },
         new RWRThreatID {
             Name = "RadarContainer1",
-            Display = "EWR",
+            Display = "R9",
             Band = "C",
-            Class = RWRThreatType.EarlyWarning
+            Class = RWRThreatType.SAM
         },
         new RWRThreatID {
             Name = "radarStation1",
