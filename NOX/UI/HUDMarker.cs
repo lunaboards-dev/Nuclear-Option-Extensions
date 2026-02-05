@@ -68,7 +68,7 @@ class HUDMarker : MonoBehaviour
         GameObject go = new GameObject("NOXSquadMarker");
         HUDMarker mark = go.AddComponent<HUDMarker>();
         mark.Parent = marker;
-        mark.Name = marker.unit.name;
+        mark.Name = marker.unit.unitName;
         mark.enabled = true;
         go.SetActive(true);
         return mark;
