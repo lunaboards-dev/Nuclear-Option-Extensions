@@ -40,7 +40,7 @@ This mod brings fully featured RWRs with threat identification (on most aircraft
 | MSV Radar | C | SAM | `R9` |
 | MSV R9 Stratolance Lancer | J | SAM | `R9` |
 | StratoLance R9 Launcher | J | SAM | `R9` |
-| Radar Container | C | EWR | `EWR` |
+| Radar Container | C | EWR | `R9` |
 | Radar Station | C | EWR | `EWR` |
 
 **Note**: All ships show up as NVL or F band. All threats not added to the library show up as `?` or H band.

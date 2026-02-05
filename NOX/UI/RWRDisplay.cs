@@ -19,22 +19,24 @@ public class RWRDisplay : MonoBehaviour
     Dictionary<RWRContact, GameObject> Contacts = [];
     ConditionalWeakTable<Unit, RWRContact> TrackedContacts = [];
     ConditionalWeakTable<Unit, RWRContact> TrackedMissiles = [];
+    public RectTransform PRt;
+    public RectTransform TRPanel;
     public IRWRSystem System;
     void Awake()
     {
         // Set up transform
         Tf = gameObject.AddComponent<RectTransform>();
-        Tf.position = new Vector3(180, 360+180);
+        Tf.pivot = new Vector2(1, 1);
         Tf.SetRectSize(new Vector2(300, 300));
-        Tf.anchorMax = new Vector2(0,0);
-        Tf.anchorMin = new Vector2(0,0);
+        Tf.anchorMax = new Vector2(1,1);
+        Tf.anchorMin = new Vector2(1,1);
 
         Cr = gameObject.AddComponent<CanvasRenderer>();
         
         RWRBase = gameObject.AddComponent<RawImage>();
         RWRBase.texture = Resources.RWRBaseTex;
         RWRBase.material = new Material(Shader.Find("UI/Default"));
-        RWRBase.color = Color.green;
+        RWRBase.color = Plugin.RWRColor.Value;
 
         System = FullRWR.Instance;
     }
@@ -64,6 +66,7 @@ public class RWRDisplay : MonoBehaviour
         if (!TrackedContacts.TryGetValue(unit, out RWRContact contact))
         {
             RWRContact c = NewContact();
+            c.Tf.SetParent(Tf, false);
             TrackedContacts.Add(unit, c);
             contact = c;
         }
@@ -93,5 +96,13 @@ public class RWRDisplay : MonoBehaviour
         }
         Contacts.Clear();
         TrackedContacts.Clear();
+    }
+
+    void Update()
+    {
+        //Plugin.Logger.LogInfo($"TRPanel: {TRPanel.anchoredPosition.y}-{TRPanel.rect.height} = {TRPanel.anchoredPosition.y-TRPanel.rect.height}");
+        Tf.anchoredPosition = new Vector3(-Plugin.RWROffsetX.Value, TRPanel.anchoredPosition.y-TRPanel.rect.height-Plugin.RWROffsetY.Value);
+        RWRBase.color = Plugin.RWRColor.Value;
+        //Tf.position = new Vector2(150,150);
     }
 }

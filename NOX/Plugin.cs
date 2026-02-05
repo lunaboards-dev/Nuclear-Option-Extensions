@@ -52,6 +52,10 @@ public class Plugin : BaseUnityPlugin
     internal static ConfigEntry<Color> SquadColor;
     internal static ConfigEntry<int> FontSize;
     internal static ConfigEntry<float> NameOffset;
+    internal static ConfigEntry<Color> RWRColor;
+    internal static ConfigEntry<float> RWROffsetX;
+    internal static ConfigEntry<float> RWROffsetY;
+    internal static ConfigEntry<float> RWRScaling;
 
     #endregion Config keys
 
@@ -65,8 +69,12 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         SquadColor = Config.Bind("Colors", "Squad Color", Color.green);
-        FontSize = Config.Bind("Labels", "HUD Player Name Font Size", 14);
-        NameOffset = Config.Bind("Labels", "HUD Player Name Offset", 5f);
+        RWRColor = Config.Bind("Colors", "RWR Color", Color.green);
+        FontSize = Config.Bind("Labels", "Player Name Font Size", 14);
+        NameOffset = Config.Bind("Labels", "Player Name Offset", 5f);
+        RWROffsetX = Config.Bind("Position", "RWR Offset X", 5f);
+        RWROffsetY = Config.Bind("Position", "RWR Offset Y", 0f);
+        RWRScaling = Config.Bind("Position", "RWR Distance Scale (km)", 50f);
         _harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
         _harmony.PatchAll();
 

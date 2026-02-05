@@ -27,8 +27,8 @@ public class RWRContact : MonoBehaviour
         Tf = gameObject.AddComponent<RectTransform>();
         Tf.position = new Vector3(0, 0);
         Tf.SetRectSize(new Vector2(43, 43));
-        Tf.anchorMax = new Vector2(0,0);
-        Tf.anchorMin = new Vector2(0,0);
+        Tf.anchorMax = new Vector2(0.5f,0.5f);
+        Tf.anchorMin = new Vector2(0.5f,0.5f);
 
         Cr = gameObject.AddComponent<CanvasRenderer>();
         
@@ -67,7 +67,7 @@ public class RWRContact : MonoBehaviour
     {
         float x = Mathf.Cos(contact.Direction);
         float y = Mathf.Sin(contact.Direction);
-        float dist = Mathf.Max(Mathf.Min(30f+((contact.Distance/20000)*80), 110), 30);
+        float dist = Mathf.Max(Mathf.Min(30f+((contact.Distance/(Plugin.RWRScaling.Value*1000))*90), 120), 30);
 
         /*track_line.transform.localScale = new Vector3(1, dist, 1);
         track_line.transform.position = Parent.Tf.position + (new Vector3(x, y, 0)*(dist/2));
@@ -90,7 +90,7 @@ public class RWRContact : MonoBehaviour
 
     public void SetPos(Vector3 pos)
     {
-        Tf.position = Parent.Tf.position + pos;
+        Tf.anchoredPosition = pos;
     }
 
     public void SetText(string t)
@@ -132,7 +132,7 @@ public class RWRContact : MonoBehaviour
             }
         } else {
             float alpha = Mathf.Max((time_to_die-Time.timeSinceLevelLoad)/3, 0);
-            Color c = Color.green;
+            Color c = Plugin.RWRColor.Value;
             c.a = alpha;
             label.color = c;
             RWRBase.color = c;

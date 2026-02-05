@@ -9,6 +9,7 @@ using NOX.UI;
 using System.Linq;
 using UnityEngine;
 using NOX.RWR;
+using UnityEngine.UI;
 
 [HarmonyPatch(typeof(SteamManager), "MarkInit")]
 static class SteamInitHook
@@ -123,8 +124,18 @@ class AddRWRHUDApp
         target = new GameObject("NOX_RWRDisplay");
         HeadMountedDisplay disp = SceneSingleton<HeadMountedDisplay>.i;
         Instance = target.AddComponent<RWRDisplay>();
-        Instance.transform.SetParent(disp.transform);
+        var Rt = disp.gameObject.GetComponent<RectTransform>();
+        Instance.Tf.SetParent(Rt, false);
         target.SetActive(true);
+        Instance.PRt = Rt;
+        for (int i = 0; i < Rt.childCount; ++i) {
+            var c = Rt.GetChild(i);
+            if (c.gameObject.name == "TopRightPanel")
+            {
+                Instance.TRPanel = c.gameObject.GetComponent<RectTransform>();
+            }
+        }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(Rt);
         /*var contact = Instance.NewContact();
         contact.SetPos(new Vector3(40, 40));
         contact.SetText("K");
