@@ -25,7 +25,13 @@
             "type": "plugin",
             "gameVersion": "0.32",
             "downloadURL": "https://github.com/lunaboards-dev/Nuclear-Option-Extensions/releases/download/v0.1.3/NOX.7z",
-            "hash": null
+            "hash": null,
+            "dependencies": [
+                {
+                    "id": "BepInEx.ConfigurationManager",
+                    "version": "18.4.1"
+                }
+            ]
         }
     ]
 }
