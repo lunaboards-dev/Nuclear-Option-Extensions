@@ -80,10 +80,15 @@ class HUDMarker : MonoBehaviour
 
     public static void ClearLabels()
     {
-        foreach (var o in Markers)
+        var c = Markers.ToArray();
+        foreach (var o in c)
         {
-            var M = o.GetComponent<HUDMarker>();
-            M?.Nullify();
+            if (o != null) {
+                var M = o.GetComponent<HUDMarker>();
+                if (o.TryGetComponent<HUDMarker>(out HUDMarker comp)) {
+                    M?.Nullify();
+                }
+            }
         }
         Markers.Clear();
     }

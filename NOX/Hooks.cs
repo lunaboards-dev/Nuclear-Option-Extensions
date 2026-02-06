@@ -116,6 +116,8 @@ class AddRWRHUDApp
 
     static void Prefix(HeadMountedDisplay __instance)
     {
+        UI.HUDMarker.Markers.Clear();
+        AddRWRHUDApp.Instance = null;
         /*HUDApp[] apps = appLookupField.GetValue(__instance) as HUDApp[];
         if (apps.Contains(RWRDisplay.Instance)) return;
         HUDApp[] new_apps = [.. apps.AddItem(RWRDisplay.Instance)];
