@@ -1,24 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
-namespace NOX.RWR;
+namespace NOX.RWRs;
 
 public static class Threats
 {
-    public enum RWRThreatType
-    {
-        AirIntercept = 1,
-        Attacker = 2,
-        AEW = 4,
-        SAM = 8,
-        AAA = 16,
-        Ship = 32,
-        FCS = 64,
-        EarlyWarning = 128,
-        Missile = 256,
-        Unknown = 0x8000
-    }
-    public static Dictionary<RWRThreatType, string> ThreatLookup = new()
+    public static ReadOnlyDictionary<RWRThreatType, string> ThreatLookup = new(new Dictionary<RWRThreatType, string>()
     {
         {RWRThreatType.AirIntercept, "AI"},
         {RWRThreatType.Attacker, "ATK"},
@@ -30,15 +19,9 @@ public static class Threats
         {RWRThreatType.EarlyWarning, "EWR"},
         {RWRThreatType.Missile, "MSL"},
         {RWRThreatType.Unknown, "?"}
-    };
-    public struct RWRThreatID
-    {
-        public string Name;
-        public string? Display;
-        public string Band;
-        public RWRThreatType Class;
-    }
-    public static RWRThreatID Ship = new()
+    });
+
+    internal static RWRThreatID Ship = new()
     {
         Name = "",
         Display = "NVL",
@@ -46,7 +29,7 @@ public static class Threats
         Class = RWRThreatType.Ship
     };
 
-    public static RWRThreatID DefaultThreat = new()
+    internal static RWRThreatID DefaultThreat = new()
     {
         Name = "",
         Display = "?",
@@ -54,7 +37,7 @@ public static class Threats
         Class = RWRThreatType.Unknown
     };
 
-    public static RWRThreatID Missile = new()
+    internal static RWRThreatID Missile = new()
     {
         Name = "",
         Display = "MSL",
@@ -62,7 +45,8 @@ public static class Threats
         Class = RWRThreatType.Missile
     };
 
-    public static RWRThreatID[] ThreatList = [
+    // We will now support adding new threats.
+    internal static List<RWRThreatID> ThreatList = [
         new RWRThreatID { // FS-12
             Name = "Fighter1",
             Display = "F12",
@@ -149,16 +133,16 @@ public static class Threats
         }
     ];
 
-    public static List<string> Ships = [
+    /*public static List<string> Ships = [
         "FleetCarrier1", "AssaultCarrier1", "Destroyer1",
         "Corvette1", "LandingCraft1"
-    ];
+    ];*/
 
     public static RWRThreatID IdentifyThreat(Unit unit)
     {
         if (unit is Missile)
             return Missile;
-        if (Ships.Contains(unit.name))
+        if (unit is Ship) //if (Ships.Contains(unit.name))
             return Ship;
         foreach (var t in ThreatList)
         {
@@ -169,5 +153,12 @@ public static class Threats
         }
         Plugin.Logger.LogWarning("No warning for "+unit.name);
         return DefaultThreat;
+    }
+
+    public static bool RegisterThreat(RWRThreatID threat)
+    {
+        if (ThreatList.Where<RWRThreatID>(t => t.Name == threat.Name).Count() > 0) return false;
+        ThreatList.Add(threat);
+        return true;
     }
 }

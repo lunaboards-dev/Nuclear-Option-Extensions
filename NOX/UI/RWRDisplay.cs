@@ -3,11 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using BepInEx;
-using NOX.RWR;
+using NOX.RWRs;
 using NuclearOption.MissionEditorScripts;
 using UnityEngine;
 using UnityEngine.UI;
-using static NOX.RWR.Systems;
 
 namespace NOX.UI;
 
@@ -38,7 +37,7 @@ public class RWRDisplay : MonoBehaviour
         RWRBase.material = new Material(Shader.Find("UI/Default"));
         RWRBase.color = Plugin.RWRColor.Value;
 
-        System = FullRWR.Instance;
+        System = RWR.Full;
     }
 
     public RWRContact NewContact()

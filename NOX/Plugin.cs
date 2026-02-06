@@ -8,6 +8,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using NOX.Hooks;
 using NuclearOption.Networking;
 using Steamworks;
 using UnityEngine;
@@ -25,30 +26,17 @@ public class Plugin : BaseUnityPlugin
     public static bool PlayerJammed;
     public static Font font;
     public static Unit LocalUnit;
-    public class Label
-    {
-        internal Text label;
-        internal float spawntime;
-    }
-
-    public static ConditionalWeakTable<HUDUnitMarker, Label> labels = [];
-    public static Label GetRef(HUDUnitMarker marker)
-    {
-        return labels.GetOrCreateValue(marker);
-    }
-
-    public static Text GetLabel(HUDUnitMarker marker)
-    {
-        return GetRef(marker).label;
-    }
-
-    public static void SetLabel(HUDUnitMarker marker, Text label)
-    {
-        GetRef(marker).label = label;
-    }
 
     #region Config keys
 
+    internal static bool Squads => EnableSquadMarker.Value;
+    internal static bool RWR => EnableRWRHud.Value;
+    internal static bool FriendsMenu => EnableFriendsMenu.Value;
+
+    internal static ConfigEntry<bool> EnableSquadMarker;
+    internal static ConfigEntry<bool> EnableRWRHud;
+    internal static ConfigEntry<bool> EnableFriendsMenu;
+    
     internal static ConfigEntry<Color> SquadColor;
     internal static ConfigEntry<int> FontSize;
     internal static ConfigEntry<float> NameOffset;
@@ -68,6 +56,10 @@ public class Plugin : BaseUnityPlugin
         // Plugin startup logic
         Logger = base.Logger;
 
+        EnableSquadMarker = Config.Bind("Features", "Enable squad marker", true);
+        EnableRWRHud = Config.Bind("Features", "Enable RWR HUD element", true);
+        EnableFriendsMenu = Config.Bind("Features", "Enable Friends menu", false);
+
         SquadColor = Config.Bind("Colors", "Squad Color", Color.green);
         RWRColor = Config.Bind("Colors", "RWR Color", Color.green);
         FontSize = Config.Bind("Labels", "Player Name Font Size", 14);
@@ -81,10 +73,11 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         try
         {
-            SteamInitHook.DoSteamInit();
+            // idk sometime i had this works
+            SteamInit.DoSteamInit();
         } catch (Exception)
         {
-            Logger.LogWarning("Steam API not initalized yet, hopefully the hook will work...");
+            Logger.LogWarning("Steam API not initalized yet, retrying on hook...");
         }
         Resources.Init();
     }

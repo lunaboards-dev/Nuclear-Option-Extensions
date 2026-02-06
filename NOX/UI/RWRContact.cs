@@ -1,7 +1,8 @@
 using System;
 using System.IO;
 using BepInEx;
-using NOX.RWR;
+using NOX.Hooks;
+using NOX.RWRs;
 using NuclearOption.MissionEditorScripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +15,8 @@ public class RWRContact : MonoBehaviour
     CanvasRenderer Cr;
     RawImage RWRBase;
     GameObject label_holder;
-    GameObject track_line;
-    Image line;
+    //GameObject track_line;
+    //Image line;
     public Text label;
     public RWRDisplay Parent;
     float time_to_die;
@@ -63,7 +64,7 @@ public class RWRContact : MonoBehaviour
         time_to_die = Time.timeSinceLevelLoad+3;
     }
 
-    public void UpdateData(Systems.RWRThreat contact)
+    public void UpdateData(RWRThreat contact)
     {
         float x = Mathf.Cos(contact.Direction);
         float y = Mathf.Sin(contact.Direction);
@@ -124,7 +125,7 @@ public class RWRContact : MonoBehaviour
             if (tracked != null)
             {
                 if (Plugin.LocalUnit?.transform == null || tracked?.transform == null) return;
-                var threat = AddRWRHUDApp.Instance.System.ThreatID(tracked);
+                var threat = RWRHud.Instance.System.ThreatID(tracked);
                 if (tracked is Missile)
                 {
                     threat.ID = "MSL";
