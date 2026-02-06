@@ -43,8 +43,12 @@ class HUDMarker : MonoBehaviour
     void Nullify()
     {
         Parent = null;
-        Label.text = "";
-        Label.enabled = false;
+        try {
+            Label.text = "";
+            Label.enabled = false;
+        } catch {
+            // idk pound sand
+        }
         enabled = false;
         gameObject.SetActive(false);
         Markers.Remove(gameObject);
@@ -79,7 +83,7 @@ class HUDMarker : MonoBehaviour
         foreach (var o in Markers)
         {
             var M = o.GetComponent<HUDMarker>();
-            M.Nullify();
+            M?.Nullify();
         }
         Markers.Clear();
     }

@@ -103,6 +103,7 @@ class ResetUnitDistanceDictOnRespawnPatch {
         Plugin.LocalUnit = SceneSingleton<CombatHUD>.i.aircraft;
         AddRWRHUDApp.Instance?.Reset();
         RWRHelper.RegisterRWREvents();
+        UI.HUDMarker.ClearLabels();
     }
 }
 
