@@ -11,6 +11,7 @@ class LobbyUIStart
     //static float pos_x = 952.5f;
     static void Prefix(LobbyList __instance)
     {
+        if (!Plugin.FriendsMenu) return;
         /*var go = GameObject.FindObjectsOfType<GameObject>().Where<GameObject>(o => o.name == "Lobby Panel").First<GameObject>();
         Plugin.Logger.LogInfo($"Found object: {go}");
         var rt = go.GetComponent<RectTransform>();
