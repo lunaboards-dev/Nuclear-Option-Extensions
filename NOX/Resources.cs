@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using BepInEx;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -23,6 +24,11 @@ public static class Resources
         RWRContactLo = LoadTex("contact_lo.png", contact_size, contact_size);
         RWRContactHi = LoadTex("contact_hi.png", contact_size, contact_size);
 
+        /*foreach (var F in assembly.GetManifestResourceNames())
+        {
+            Plugin.Logger.LogInfo(F);
+        }*/
+
         AllFonts();
 
         /*Font = UnityEngine.Resources.Load<Font>("Font/regular.otf");//GetBuiltinResource<Font>("Font/regular_cozy.otf");
@@ -33,10 +39,12 @@ public static class Resources
         //}
     }
 
+    static Assembly assembly = Assembly.GetExecutingAssembly();
+
     static Texture2D LoadTex(string path, int w, int h)
     {
         Texture2D tmp = new Texture2D(w, h);
-        byte[] data = LoadAsset(path);
+        byte[] data = Plugin.LoadExternal.Value ? LoadAsset(path) : LoadAssetInternal(path);
         ImageConversion.LoadImage(tmp, data);
         return tmp;
     }
@@ -47,6 +55,20 @@ public static class Resources
         string iconPath = Path.Combine(Paths.PluginPath, "NOX", "assets", path);
         byte[] rtv =  File.ReadAllBytes(iconPath);
         return rtv;
+    }
+
+    static byte[] LoadAssetInternal(string path)
+    {
+        Plugin.Logger.LogInfo($"Loading internal asset: {path}");
+        using (Stream stream = assembly.GetManifestResourceStream("NOX.assets."+path))
+        {
+            if (stream == null) return [];
+            //Plugin.Logger.LogInfo($"Loading internal asset (real): {path}");
+            byte[] buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+
+            return buffer;
+        }
     }
 
     public static void AllFonts()
