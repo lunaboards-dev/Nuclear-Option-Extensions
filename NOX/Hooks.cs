@@ -178,6 +178,10 @@ static class RWRHelper
     {
         ClearRWREvents();
         Aircraft ac = SceneSingleton<CombatHUD>.i.aircraft;
+        if (ac == null) {
+            Plugin.Logger.LogWarning("Aircraft is null, so we'll try again later.");
+            return;
+        };
         Plugin.Logger.LogInfo($"Local aircraft: unit = {ac.unitName}, unique = {ac.UniqueName}, name = {ac.name}, map unique = {ac.MapUniqueName}");
         if (AddRWRHUDApp.Instance != null) {
             AddRWRHUDApp.Instance.System = Systems.RWRSystems[ac.name];

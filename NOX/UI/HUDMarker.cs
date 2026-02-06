@@ -57,11 +57,12 @@ class HUDMarker : MonoBehaviour
     void Update()
     {
         if (Parent == null) return;
-        if (!FriendsAircraft.ContainsValue(Parent.unit.persistentID) || Parent.unit.GetPlayer() == null || !Parent.unit.isActiveAndEnabled)
+        if (!FriendsAircraft.ContainsValue(Parent.unit.persistentID) || Parent?.unit.GetPlayer() == null || !Parent.unit.isActiveAndEnabled)
         {
             Nullify();
             return;
         }
+        if (Label.transform == null || Parent?.image.transform == null) return;
         Label.transform.position = Parent.image.transform.position + new UnityEngine.Vector3(0f, NameOffset.Value, 0f);
         Label.color = SquadColor.Value;
         Label.enabled = Parent.image.enabled && !Parent.selected && !PlayerJammed;

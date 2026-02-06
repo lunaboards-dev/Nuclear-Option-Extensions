@@ -123,6 +123,7 @@ public class RWRContact : MonoBehaviour
             //line.color = c;
             if (tracked != null)
             {
+                if (Plugin.LocalUnit?.transform == null || tracked?.transform == null) return;
                 var threat = AddRWRHUDApp.Instance.System.ThreatID(tracked);
                 if (tracked is Missile)
                 {
