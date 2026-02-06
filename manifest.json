@@ -22,7 +22,7 @@
             "fileName": "NOX.7z",
             "version": "0.1.3",
             "category": "preRelease",
-            "type": "plguin",
+            "type": "plugin",
             "gameVersion": "0.32",
             "downloadURL": "https://github.com/lunaboards-dev/Nuclear-Option-Extensions/releases/download/v0.1.3/NOX.7z",
             "hash": null
