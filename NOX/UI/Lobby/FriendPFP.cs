@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Steamworks;
 
 namespace NOX.UI.Lobby;
 
@@ -10,6 +11,6 @@ class FriendPFP : MonoBehaviour {
     void Awake()
     {
         image = gameObject.AddComponent<RawImage>();
-
+        
     }
 }
