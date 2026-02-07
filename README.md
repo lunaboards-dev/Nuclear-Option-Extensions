@@ -1,5 +1,9 @@
 # NOX - Nuclear Option eXtensions
 
+## Troubleshooting
+
+**FIRST:** Try disabling mods by Hellcat92. These appear to cause issues with other mods, for whatever reason.
+
 ## Squad markers
 
 ## RWR
