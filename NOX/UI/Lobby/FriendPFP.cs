@@ -11,6 +11,10 @@ class FriendPFP : MonoBehaviour {
     void Awake()
     {
         image = gameObject.AddComponent<RawImage>();
-        
+    }
+
+    void SetID(CSteamID id)
+    {
+        SteamFriends.GetLargeFriendAvatar(id);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 
 namespace NOX.Manager;
 
+#pragma warning disable CS0649
+
 [Serializable]
 struct NOMArtifact
 {
@@ -39,13 +41,15 @@ struct NOMRepo
     public NOMMod[] mods;
 }
 
+#pragma warning restore CS0649
+
 class NOM
 {
     NOMRepo repo;
     UnityWebRequest www;
 
-    Action<NOM> Ready;
-    Action<NOM> Failure;
+    public Action<NOM> Ready;
+    public Action<NOM> Failure;
 
     internal NOM()
     {
