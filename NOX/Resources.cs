@@ -14,6 +14,7 @@ public static class Resources
     public static Texture2D RWRContactLo;
     public static Texture2D RWRContactHi;
     public static Font Font;
+    public static Font UIFont;
 
     public static void Init()
     {
@@ -36,6 +37,7 @@ public static class Resources
         {
             Plugin.Logger.LogError("Font not found!");*/
         Font = UnityEngine.Resources.GetBuiltinResource<Font>("Arial.ttf"); // temporary until the actual font is loaded
+        UIFont = Font;
         //}
     }
 

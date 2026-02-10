@@ -82,6 +82,7 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning("Steam API not initalized yet, retrying on hook...");
         }
         Resources.Init();
+        FactionHQ hq;
     }
 
     // quick and dirty hooks
