@@ -47,7 +47,7 @@ static class Utils
         "163",
         "SA7",
         "OFF",
-        "HI",
+        "hi",
         "S15",
         "747",
 
