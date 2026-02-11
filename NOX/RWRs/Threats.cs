@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BepInEx.Logging;
 
 namespace NOX.RWRs;
 
@@ -157,7 +158,12 @@ public static class Threats
 
     public static bool RegisterThreat(RWRThreatID threat)
     {
-        if (ThreatList.Where<RWRThreatID>(t => t.Name == threat.Name).Count() > 0) return false;
+        if (ThreatList.Where(t => t.Name == threat.Name).Count() > 0)
+        {
+            Plugin.Logger.LogWarning($"Attempt to overwrite threat info for unit {threat.Name}. Ignoring.");
+            return false;
+        }
+        ;
         ThreatList.Add(threat);
         return true;
     }

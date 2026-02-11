@@ -101,7 +101,7 @@ class Steam : MonoBehaviour
 
     void RefreshBasicInfo(CSteamID id, SteamFriend friend)
     {
-        print($"RefreshBasicInfo {id.m_SteamID} {friend}");
+        //print($"RefreshBasicInfo {id.m_SteamID} {friend}");
         friend.name = SteamFriends.GetFriendPersonaName(id);
         friend.state = SteamFriends.GetFriendPersonaState(id);
         friend.online = (friend.state & EPersonaState.k_EPersonaStateOnline) > 0;
@@ -167,7 +167,7 @@ class Steam : MonoBehaviour
             int hand = SteamFriends.GetLargeFriendAvatar(id);
             RealLoadImage(hand, f);
             if (should_update) {
-                print("Friend: "+f);
+                //print("Friend: "+f);
                 if (OnFriendUpdate != null)
                     OnFriendUpdate(f);
             }

@@ -1,0 +1,13 @@
+{
+    "version": 0,
+    "deftype": "unit",
+    "name": "TestUnit",
+    "threat": {
+        "band": "M",
+        "type": "attacker",
+        "id": "H64"
+    },
+    "rwr": {
+        "type": "helicopter"
+    }
+}

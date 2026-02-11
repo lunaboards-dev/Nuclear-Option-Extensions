@@ -31,4 +31,15 @@ static class RWR
         {"Darkreach", Full},
         {"fastBomber1", Full}
     };
+
+    public static bool AddRWR(string unit, IRWRSystem rwr)
+    {
+        if (RWRSystems.ContainsKey(unit))
+        {
+            Plugin.Logger.LogWarning($"Attempt to overwrite RWR for unit {unit} with {rwr}.");
+            return false;
+        }
+        RWRSystems.Add(unit, rwr);
+        return true;
+    }
 }

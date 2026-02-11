@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using HarmonyLib;
 using NuclearOption.MissionEditorScripts;
 using NuclearOption.Networking.Lobbies;
 using Steamworks;
@@ -61,7 +63,7 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
 
         PFPHolder = new GameObject("NOXFriendPFP");
         PFP = PFPHolder.AddComponent<FriendPFP>();
-        print($"PFP: {PFP}, PFP.tf: {PFP.tf}, Tf: {Tf}");
+        //print($"PFP: {PFP}, PFP.tf: {PFP.tf}, Tf: {Tf}");
         PFP.tf.SetParent(Tf, false);
         PFP.tf.localPosition = new Vector3(5, 0, 0);
 
@@ -121,21 +123,61 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
         {FriendStatus.Offline, ("Offline", Color.grey)}
     };
 
-    public void ReqFailed() {}
+    public void ReqFailed()
+    {
+        Plugin.Logger.LogError("failed to get server info");
+    }
 
     public void ServerResponded(gameserveritem_t server)
     {
+        Plugin.Logger.LogError("got server info: "+server);
         Status.text.text = "Playing on "+server.GetServerName();
+        Status.text.fontSize = 15;
+    }
+
+    public LobbyListItem GetLobbyInfo(Steam.SteamFriend friend)
+    {
+        return FindObjectsOfType<LobbyListItem>().Where(t =>
+        {
+            if (friend.lobby.m_SteamID > 0)
+            {
+                if (t.lobby is PlayerLobbyInstance)
+                {
+                    PlayerLobbyInstance pli = t.lobby as PlayerLobbyInstance;
+                    return pli.LobbyId == friend.lobby;
+                }
+                return false;
+            } else
+            {
+                if (t.lobby is ServerLobbyInstance)
+                {
+                    ServerLobbyInstance sli = t.lobby as ServerLobbyInstance;
+                    var addr = sli.details.m_NetAdr;
+                    return addr.GetIP() == friend.ip && addr.GetConnectionPort() == friend.port;
+                }
+                return false;
+            }
+        }).FirstOrDefault();
     }
 
     public void FriendRefresh(Steam.SteamFriend friend)
     {
         (string info, Color color) stat = Map[friend.status];
         PFP.color = stat.color;
+        Status.text.fontSize = 30;
         if (friend.status == FriendStatus.Online && friend.in_game)
             Status.text.text = "In other game";
-        else if (friend.status == FriendStatus.InGame)
-            SteamMatchmakingServers.PingServer(friend.ip, friend.port, new ISteamMatchmakingPingResponse(ServerResponded, ReqFailed));
+        else if (friend.status == FriendStatus.Playing) {
+            //Plugin.Logger.LogInfo($"Friend: {friend.name}, IP: {friend.ip}, Port: {friend.port}, ID: {friend.lobby.m_SteamID}");
+            var info = GetLobbyInfo(friend);
+            if (info == null)
+                Status.text.text = "Playing on a server";
+            else {
+                Status.text.text = "Playing on "+info.LobbyName;
+                Status.text.fontSize = 15;
+            }
+            //SteamMatchmakingServers.PingServer(friend.ip, friend.port, new ISteamMatchmakingPingResponse(ServerResponded, ReqFailed));
+        }
         else
             Status.text.text = stat.info;
         Name.text.text = friend.name;
@@ -144,7 +186,27 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (id > 0)
+        {
+            var friend = Steam.Instance.Cached[id];
+            if (friend.status != FriendStatus.Playing) return;
+            var lli = GetLobbyInfo(friend);
+            if (lli == null) return;
+            lli.OnPointerClick(eventData);
+            /*var modal = FindAnyObjectByType<LobbyDetailsModal>();
+            if (modal == null)
+            {
+                Plugin.Logger.LogError("no modal");
+                return;
+            }
+            var list = FindAnyObjectByType<LobbyList>();
+            if (list == null)
+            {
+                Plugin.Logger.LogError("no list");
+                return;
+            }
+            modal.Show(list, lli.lobby);*/
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

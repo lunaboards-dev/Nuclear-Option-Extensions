@@ -66,6 +66,9 @@
     <Reference Include="UnityEngine.JSONSerializeModule">
       <HintPath>$(GameDirectory)/NuclearOption_Data/Managed/UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(GameDirectory)/NuclearOption_Data/Managed/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">

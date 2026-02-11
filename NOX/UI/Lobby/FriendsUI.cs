@@ -50,7 +50,7 @@ class FriendsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Tf.SetRectSize(new Vector2(500, PRt.rect.height));
         //Tf.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, PRt.rect.height);
         
-        Plugin.Logger.LogInfo($"FriendsUI X: {Tf.position.x} Y: {Tf.position.y}, parent size: {PRt.rect.width}, {PRt.rect.height}");
+        //Plugin.Logger.LogInfo($"FriendsUI X: {Tf.position.x} Y: {Tf.position.y}, parent size: {PRt.rect.width}, {PRt.rect.height}");
         Tf.anchoredPosition = new Vector2(-90, 5);
 
         Steam.Instance.RefreshFriends(true);
