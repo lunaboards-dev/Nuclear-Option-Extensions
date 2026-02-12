@@ -28,7 +28,7 @@ class FriendPFP : MonoBehaviour {
         tf.pivot = new Vector2(0, 0);
         
         outline.effectColor = Color.grey;
-        outline.effectDistance = new Vector2(2, -2);
+        outline.effectDistance = new Vector2(3, -3);
     }
 
     internal void SetID(CSteamID id)

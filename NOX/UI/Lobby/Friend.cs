@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace NOX.UI.Lobby;
 
-class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+class Friend : MonoBehaviour, IEventSystemHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     GameObject PFPHolder;
     GameObject NameHolder;
@@ -23,6 +23,7 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
     EventTrigger Trg;
     public RectTransform Tf;
     ulong id;
+    LayoutElement layout;
 
     void RefreshInfo(CSteamID cid)
     {
@@ -56,7 +57,18 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
     {
         Tf = gameObject.AddComponent<RectTransform>();
         Tf.SetRectSize(new Vector2(500, 80));
-        Tf.pivot = new Vector2(0, 0);
+        Tf.pivot = new Vector2(0f, 0f);
+        Tf.anchorMax = new Vector2(0, 1);
+        Tf.anchorMin = new Vector2(0, 1);
+        //Tf.anchoredPosition = new Vector2(-250,0);
+
+        layout = gameObject.AddComponent<LayoutElement>();
+        layout.minHeight = 80;
+        layout.preferredHeight = 80;
+        layout.minWidth = 500;
+        layout.preferredHeight = 500;
+        layout.flexibleHeight = 0;
+        layout.flexibleWidth = -1;
 
         background = gameObject.AddComponent<Image>();
         background.color = Color.black;
@@ -89,7 +101,7 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
         Status.text.fontSize = 30;
         Status.text.text = "Offline";
 
-        Trg = gameObject.AddComponent<EventTrigger>();
+        //Trg = gameObject.AddComponent<EventTrigger>();
 
         //Steam.Instance.OnFriendChange += UserRefresh;
         Steam.Instance.OnFriendUpdate += FriendRefresh;
@@ -211,7 +223,7 @@ class Friend : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        background.color = new Color(1,1,1,0.1f);
+        background.color = new Color(0.1f,0.1f,0.1f,1);
     }
 
     public void OnPointerExit(PointerEventData eventData)
