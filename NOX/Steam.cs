@@ -96,7 +96,7 @@ class Steam : MonoBehaviour
             }
         }
         SortFriends();
-        Plugin.Logger.LogDebug($"Registered {Plugin.Friends.Count} friends.");
+        Plugin.Logger.LogDebug($"Registered {Friends.Count} friends.");
     }
 
     void RefreshBasicInfo(CSteamID id, SteamFriend friend)

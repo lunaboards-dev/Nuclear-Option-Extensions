@@ -205,19 +205,6 @@ class Friend : MonoBehaviour, IEventSystemHandler, IPointerClickHandler, IPointe
             var lli = GetLobbyInfo(friend);
             if (lli == null) return;
             lli.OnPointerClick(eventData);
-            /*var modal = FindAnyObjectByType<LobbyDetailsModal>();
-            if (modal == null)
-            {
-                Plugin.Logger.LogError("no modal");
-                return;
-            }
-            var list = FindAnyObjectByType<LobbyList>();
-            if (list == null)
-            {
-                Plugin.Logger.LogError("no list");
-                return;
-            }
-            modal.Show(list, lli.lobby);*/
         }
     }
 

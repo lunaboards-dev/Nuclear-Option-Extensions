@@ -59,7 +59,7 @@ public class Plugin : BaseUnityPlugin
 
         EnableSquadMarker = Config.Bind("Features", "Enable squad marker", true);
         EnableRWRHud = Config.Bind("Features", "Enable RWR HUD element", true);
-        EnableFriendsMenu = Config.Bind("Features", "Enable join friends menu", false);
+        EnableFriendsMenu = Config.Bind("Features", "Enable join friends menu", true);
         LoadExternal = Config.Bind("Features", "Load external assets", false, "WARNING: This may break if installed from a mod manager");
 
         SquadColor = Config.Bind("Colors", "Squad Color", Color.green);

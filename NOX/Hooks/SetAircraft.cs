@@ -10,7 +10,7 @@ static class SetAircraft
     static void Prefix(Player __instance, Aircraft aircraft)
     {
         ulong steamid = __instance.SteamID;
-        if (Plugin.Friends.Contains(steamid))
+        if (Steam.Instance.FriendIDs.Contains(steamid))
         {
             Plugin.FriendsAircraft[steamid] = aircraft.persistentID;
         }
