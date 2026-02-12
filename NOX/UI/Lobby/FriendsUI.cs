@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NuclearOption.Jobs;
 using NuclearOption.MissionEditorScripts;
 using Steamworks;
@@ -34,6 +35,8 @@ class FriendsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     RectTransform VPf;
 
     Color defcol = new(1,1,1,1);
+
+    List<Friend> children = [];
 
     void AddDebugOutline(GameObject o, Color c)
     {
@@ -129,23 +132,58 @@ class FriendsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         Steam.Instance.RefreshFriends(true);
 
+        RefreshUsers();
+        Steam.Instance.OnFriendUpdate += FriendRefresh;
+    }
+
+    void ClearChildren()
+    {
+        VTf.DetachChildren();
+    }
+
+    Friend Child(CSteamID id)
+    {
+        return children.Where(t => t.id == id.m_SteamID).FirstOrDefault();
+    }
+
+    public void FriendRefresh(Steam.SteamFriend friend)
+    {
+        RefreshUsers();
+    }
+
+    void OnDestroy()
+    {
+        Steam.Instance.OnFriendUpdate -= FriendRefresh;
+    }
+
+    void RefreshUsers()
+    {
+        ClearChildren();
+        List<Friend> new_list = [];
         for (int i = 0; i < Steam.Instance.Friends.Count; ++i)
         {
             var f = Steam.Instance.Friends[i];
-            AddUser(f);
+            var child = Child(f);
+            if (!child)
+                child = AddUser(f);
+            else
+                child.Tf.SetParent(VTf, false);
+            new_list.Add(child);
         }
+        children = new_list;
     }
 
-    void AddUser(CSteamID id)
+    Friend AddUser(CSteamID id)
     {
-        test = new GameObject("NOXFriendButton");
-        Friend f = test.AddComponent<Friend>();
+        var t = new GameObject("NOXFriendButton");
+        Friend f = t.AddComponent<Friend>();
         Vlg.enabled = false;
         f.Tf.SetParent(VTf, false);
         
         f.SetID(id);
         RefreshLayout();
         Vlg.enabled = true;
+        return f;
     }
 
     void RefreshLayout()

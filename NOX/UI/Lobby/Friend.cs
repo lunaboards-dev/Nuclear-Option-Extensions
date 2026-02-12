@@ -22,7 +22,7 @@ class Friend : MonoBehaviour, IEventSystemHandler, IPointerClickHandler, IPointe
     Image background;
     EventTrigger Trg;
     public RectTransform Tf;
-    ulong id;
+    internal ulong id;
     LayoutElement layout;
 
     void RefreshInfo(CSteamID cid)
@@ -174,6 +174,7 @@ class Friend : MonoBehaviour, IEventSystemHandler, IPointerClickHandler, IPointe
 
     public void FriendRefresh(Steam.SteamFriend friend)
     {
+        if (friend.id != id) return;
         (string info, Color color) stat = Map[friend.status];
         PFP.color = stat.color;
         Status.text.fontSize = 30;

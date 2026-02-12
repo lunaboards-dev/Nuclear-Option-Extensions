@@ -168,8 +168,7 @@ class Steam : MonoBehaviour
             RealLoadImage(hand, f);
             if (should_update) {
                 //print("Friend: "+f);
-                if (OnFriendUpdate != null)
-                    OnFriendUpdate(f);
+                OnFriendUpdate?.Invoke(f);
             }
         }
     }
