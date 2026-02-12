@@ -238,4 +238,13 @@ class Steam : MonoBehaviour
         if ((user.m_nChangeFlags & EPersonaChange.k_EPersonaChangeAvatar) > 0)
             sf.dirty_pfp = true;
     }
+
+    // idk why NO doesn't seem to do this itself
+    internal class SteamCallbackRunner : MonoBehaviour
+    {
+        void Update()
+        {
+            SteamAPI.RunCallbacks();
+        }
+    }
 }

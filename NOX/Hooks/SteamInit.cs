@@ -21,6 +21,7 @@ static class SteamInit
         if (!isServer)
         {
             DoSteamInit();
+            __instance.gameObject.AddComponent<Steam.SteamCallbackRunner>();
         }
     }
 }
