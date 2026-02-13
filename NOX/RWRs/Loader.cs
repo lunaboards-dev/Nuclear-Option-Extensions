@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using BepInEx;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -73,10 +74,10 @@ class Loader
 
     static void LoadFile(string path)
     {
-        Plugin.Logger.LogInfo($"DefLoader loading file {path}");
+        //Plugin.Logger.LogInfo($"DefLoader loading file {path}");
         string str = File.ReadAllText(path);
-        var def = JsonUtility.FromJson<NOXUnitDef>(str);
-        Plugin.Logger.LogInfo($"DefLoader ({path}): rwr = {def.rwr}, threat = {def.threat}");
+        var def = JsonConvert.DeserializeObject<NOXUnitDef>(str);//JsonUtility.FromJson<NOXUnitDef>(str);
+        //Plugin.Logger.LogInfo($"DefLoader ({path}): rwr = {def.rwr}, threat = {def.threat}");
         if (def.version != 0 || def.deftype != "unit")
         {
             Plugin.Logger.LogError($"DefLoader error ({path}): invalid version or deftype. Def not loaded.");
@@ -120,7 +121,7 @@ class Loader
             {
                 Plugin.Logger.LogError($"DefLoader error ({path}): invalid threat ID. Threat not added."); goto cont;
             }
-            Plugin.Logger.LogInfo($"DefLoader ({path}): Added radar (name = {def.name}, id= {threat.id}, type = {threat.type}, band = {threat.band})");
+            //Plugin.Logger.LogInfo($"DefLoader ({path}): Added radar (name = {def.name}, id= {threat.id}, type = {threat.type}, band = {threat.band})");
             Threats.RegisterThreat(new RWRThreatID()
             {
                 Band = threat.band,
@@ -148,13 +149,13 @@ class Loader
 
     static internal void RecurseSearchForConfigDir(string path)
     {
-        Plugin.Logger.LogDebug("Searching path: "+path);
+        //Plugin.Logger.LogDebug("Searching path: "+path);
         foreach (string f in Directory.GetDirectories(path))
         {
             string jpath = f;
             if (Directory.Exists(jpath))
             {
-                Plugin.Logger.LogDebug("> Searching path: "+jpath);
+                //Plugin.Logger.LogDebug("> Searching path: "+jpath);
                 if (Path.GetFileName(f) == ".noxcfg")
                 {
                     Plugin.Logger.LogDebug("Found config directory: "+jpath);

@@ -60,7 +60,7 @@ class Steam : MonoBehaviour
 
     void _OnFriendUpdate(SteamFriend c)
     {
-        print("OnFriendUpdate");
+        //print("OnFriendUpdate");
     }
 
     void OnEnable()

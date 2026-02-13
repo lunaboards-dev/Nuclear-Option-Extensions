@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -65,7 +66,26 @@ class NOM
             Failure(this);
         }
         string res = "{\"mods\": "+www.downloadHandler.text+"}";
-        repo = JsonUtility.FromJson<NOMRepo>(res);
+        repo = JsonConvert.DeserializeObject<NOMRepo>(res);
         Ready(this);
+    }
+
+    void DownloadMod(string package, string version, string path)
+    {
+        foreach (var mod in repo.mods)
+        {
+            if (mod.id == package)
+            {
+                foreach (var artifact in mod.artifacts) {
+                    
+                    var req = UnityWebRequest.Get("");
+                }
+            }
+        }
+    }
+
+    void UnpackMod(string path, string result)
+    {
+        
     }
 }

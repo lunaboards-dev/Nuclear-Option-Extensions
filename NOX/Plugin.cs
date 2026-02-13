@@ -9,6 +9,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using NOX.Hooks;
+using NOX.Manager;
 using NuclearOption.Networking;
 using Steamworks;
 using UnityEngine;
@@ -72,7 +73,18 @@ public class Plugin : BaseUnityPlugin
         _harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
         _harmony.PatchAll();
 
+        WineDetect.detect();
+
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
+        if (WineDetect.is_wine())
+        {
+            Logger.LogWarning($"Running on WINE version {WineDetect.wine_get_version()}");
+            Logger.LogInfo($"Plugin REAL path: {WineDetect.wine_get_unix_file_name(Paths.PluginPath)}");
+        }
+        if (!SevenZip.CheckFor7z())
+            Logger.LogWarning("7zip is NOT detected, Mod Manager functionality won't be available.");
+        else
+            Logger.LogInfo("7zip found.");
         try
         {
             // idk sometime i had this works
