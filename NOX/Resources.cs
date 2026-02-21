@@ -39,6 +39,7 @@ public static class Resources
         Font = UnityEngine.Resources.GetBuiltinResource<Font>("Arial.ttf"); // temporary until the actual font is loaded
         UIFont = Font;
         //}
+        BetaTesters.LoadBetaTesters();
     }
 
     static Assembly assembly = Assembly.GetExecutingAssembly();
@@ -72,6 +73,11 @@ public static class Resources
             return buffer;
         }
     }
+
+    // THIS USES THE FULL PATH
+    public static Stream GetStream(string path) => assembly.GetManifestResourceStream(path);
+
+    public static string[] GetResourceNames() => assembly.GetManifestResourceNames();
 
     public static void AllFonts()
     {

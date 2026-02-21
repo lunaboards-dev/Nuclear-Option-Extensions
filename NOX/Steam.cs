@@ -34,6 +34,7 @@ class Steam : MonoBehaviour
         public EPersonaState state;
     }
 
+    public static ulong ID;
     private CallResult<PersonaStateChange_t> friendListChange;
     CallResult<AvatarImageLoaded_t> imageLoaded;
     static readonly EFriendFlags friend_flags = EFriendFlags.k_EFriendFlagImmediate;
@@ -51,6 +52,7 @@ class Steam : MonoBehaviour
     {
         Holder = new GameObject("NOXSteam");
         Instance = Holder.AddComponent<Steam>();
+        ID = SteamUser.GetSteamID().m_SteamID;
     }
 
     void _OnFriendChange(PersonaStateChange_t c)

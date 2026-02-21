@@ -1,7 +1,7 @@
 {
     "verison": 0,
     "deftype": "unit",
-    "name": "Fighter1",
+    "name": "CAS1",
     "rwr": {
         "type": "full"
     }

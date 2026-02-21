@@ -74,8 +74,23 @@ class Loader
 
     static void LoadFile(string path)
     {
-        //Plugin.Logger.LogInfo($"DefLoader loading file {path}");
-        string str = File.ReadAllText(path);
+        using var stream = File.OpenRead(path);
+        LoadFile(stream, path);
+    }
+
+    static void LoadInternal(string path)
+    {
+        using var stream = Resources.GetStream(path);
+        LoadFile(stream, "DLL:"+path);
+    }
+
+    static void LoadFile(Stream stream, string path)
+    {
+        Plugin.Logger.LogInfo($"DefLoader loading file {path}");
+        //string str = File.ReadAllText(path);
+        StreamReader reader = new(stream);
+        string str = reader.ReadToEnd();
+        reader.Close();
         var def = JsonConvert.DeserializeObject<NOXUnitDef>(str);//JsonUtility.FromJson<NOXUnitDef>(str);
         //Plugin.Logger.LogInfo($"DefLoader ({path}): rwr = {def.rwr}, threat = {def.threat}");
         if (def.version != 0 || def.deftype != "unit")
@@ -104,7 +119,14 @@ class Loader
                 }
                 IRWRSystem masked = new Systems.Mask(rwr.elevation, mask);
                 RWR.AddRWR(def.name, masked);
+            } else if (rwr.type != null && SystemMap.TryGetValue(rwr.type, out IRWRSystem system))
+            {
+                RWR.AddRWR(def.name, system);
+            } else
+            {
+                Plugin.Logger.LogError($"DefLoader error ({path}): Unknown RWR type {rwr.type}");
             }
+            Plugin.Logger.LogDebug($"DefLoader loaded RWR for unit {def.name}: {rwr.type}");
         }
         if (def.threat != null)
         {
@@ -129,6 +151,7 @@ class Loader
                 Display = threat.id,
                 Name = def.name
             });
+            Plugin.Logger.LogDebug($"DefLoader loaded theat ID for unit {def.name}");
         }
         cont:;
     }
@@ -170,6 +193,11 @@ class Loader
 
     static internal void LoadNOXConfigs()
     {
+        foreach (string rsc in Resources.GetResourceNames())
+        {
+            if (rsc.StartsWith("NOX.assets.units."))
+                LoadInternal(rsc);
+        }
         RecurseSearchForConfigDir(Paths.PluginPath);
     }
 }

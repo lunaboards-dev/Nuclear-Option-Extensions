@@ -14,6 +14,8 @@ static class SteamInit
         Steam.Init();
         Steam.Instance.RefreshFriends();
         InitComplete = true;
+        if (BetaTesters.LocalIsTester)
+            Plugin.Logger.LogWarning("!!!!!!!!!!!! EXPERIMENTAL FEATURES ARE ENABLED !!!!!!!!!!!!");
     }
 
     static void Postfix(SteamManager __instance, bool isServer)

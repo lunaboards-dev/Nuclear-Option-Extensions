@@ -48,7 +48,7 @@ public static class Threats
 
     // We will now support adding new threats.
     internal static List<RWRThreatID> ThreatList = [
-        new RWRThreatID { // FS-12
+        /*new RWRThreatID { // FS-12
             Name = "Fighter1",
             Display = "F12",
             Band = "I",
@@ -131,7 +131,7 @@ public static class Threats
             Display = "R9",
             Band = "J",
             Class = RWRThreatType.SAM
-        }
+        }*/
     ];
 
     /*public static List<string> Ships = [

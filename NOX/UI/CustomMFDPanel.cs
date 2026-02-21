@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
+using Mono.Cecil;
 using NOX.Hooks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +11,7 @@ namespace NOX.UI;
 
 abstract class CustomMFDPanel
 {
+    public static List<GameObject> panels = [];
     public abstract string Label {get;}
     public abstract string Title {get;}
     public GameObject PanelInner => panel_inner;
@@ -25,17 +28,25 @@ abstract class CustomMFDPanel
     public static void Register<T>(VirtualMFD mfd) where T : CustomMFDPanel, new()
     {
         var go = new GameObject("NOX_MFDPanel");
-        go.AddComponent<CustomMFDPaneBehavior<T>>();
+        var pan = go.AddComponent<CustomMFDPaneBehavior>();
+        pan.SetPanel<T>();
+        panels.Add(go);
     }
 
-    public sealed class CustomMFDPaneBehavior<T> : MonoBehaviour where T : CustomMFDPanel, new()
+    public sealed class CustomMFDPaneBehavior : MonoBehaviour
     {
-        T instance;
+        CustomMFDPanel instance;
         GameObject panel;
         GameObject inner;
         MFDScreen app;
         ContentSizeFitter fitter;
         internal bool left_side;
+        GameObject title;
+        VirtualMFD mfd;
+        Button button;
+        RectTransform transform;
+        GameObject layout;
+        VerticalLayoutGroup group;
 
         private static readonly FieldInfo right = AccessTools.Field(typeof(VirtualMFD), "rightScreens");
         private static readonly FieldInfo left = AccessTools.Field(typeof(VirtualMFD), "leftScreens");
@@ -44,7 +55,7 @@ abstract class CustomMFDPanel
 
         public bool FindFirstFree(MFDScreen screen)
         {
-            var mfd = FindObjectOfType<VirtualMFD>();
+            mfd = FindObjectOfType<VirtualMFD>();
             var mfdobj = mfd.gameObject;
             if (mfd != null) {
                 screen.gameObject.transform.SetParent(mfdobj.transform, false);
@@ -57,15 +68,25 @@ abstract class CustomMFDPanel
                     var fleft = leftScreens.IndexOf(null);
                     if (fright > -1)
                     {
-                        rightScreens.Add(screen);
+                        rightScreens[fright] = screen;
                         screen.label = rightButtons[fright].gameObject.GetChildComponentByName<Text>("Label");
                         screen.highlight = rightButtons[fright].gameObject.GetChildComponentByName<Image>("Highlight");
-                    }
-                    if (fleft > -1)
+                        button = rightButtons[fright];
+                        button.interactable = true;
+                        button.enabled = true;
+                        //rightButtons[fright].onClick.AddListener(ButtonClickRight);
+                    } else if (fleft > -1)
                     {
-                        leftScreens.Add(screen);
+                        leftScreens[fleft] = screen;
                         screen.label = leftButtons[fleft].gameObject.GetChildComponentByName<Text>("Label");
                         screen.highlight = rightButtons[fright].gameObject.GetChildComponentByName<Image>("Highlight");
+                        button = leftButtons[fleft];
+                        button.interactable = true;
+                        button.enabled = true;
+                        //leftButtons[fleft].onClick.AddListener(ButtonClickLeft);
+                    } else
+                    {
+                        throw new OverflowException("unable to add MFD panel");
                     }
                     return true;
                 } else {
@@ -86,15 +107,30 @@ abstract class CustomMFDPanel
             fitter.verticalFit = ContentSizeFitter.FitMode.MinSize;
             app.displayPanel = panel;
             app.aircraftOnly = true;
-            inner = new GameObject("NOXInnerPanel");
+        }
+
+        internal void SetPanel<T>() where T : CustomMFDPanel, new()
+        {
             instance = new T();
+            inner = new GameObject("NOXInnerPanel");
+            title = new GameObject("NOXPanelTitle");
+            var title_txt = title.AddComponent<Text>();
+            var title_tf = title.GetComponent<RectTransform>();
+            title_tf.anchorMax = new Vector2(0.5f, 1);
+            title_tf.anchorMin = new Vector2(0.5f, 1);
+            title_tf.pivot = new Vector2(0.5f, 1);
             app.shortName = instance.Label;
             FindFirstFree(app);
             instance.panel_inner = inner;
             instance.label = app.label;
+            title_txt.text = instance.Title;
+            title_txt.font = Resources.UIFont;
+            title_txt.fontSize = 30;
+            //app.label.text = instance.Label;
             //instance.label.text = instance.Label;
             instance.InitPanel(panel);
             instance.PanelCreate();
+            Plugin.Logger.LogDebug("Panel created!");
         }
 
         void Update()

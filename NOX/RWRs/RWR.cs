@@ -11,7 +11,7 @@ static class RWR
 
 
     public static Dictionary<string, IRWRSystem> RWRSystems = new() {
-        // The Cricket and Compass have the most basic RWRs
+        /*// The Cricket and Compass have the most basic RWRs
         {"COIN", Band},
         {"trainer", Band},
 
@@ -29,7 +29,7 @@ static class RWR
         {"Multirole1", Full},
         {"EW1", Full},
         {"Darkreach", Full},
-        {"fastBomber1", Full}
+        {"fastBomber1", Full}*/
     };
 
     public static bool AddRWR(string unit, IRWRSystem rwr)

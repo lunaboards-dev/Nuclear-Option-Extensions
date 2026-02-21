@@ -42,6 +42,7 @@ class HUDMarker : MonoBehaviour
 
     void Nullify()
     {
+        if (Parent == null) return;
         Parent = null;
         try {
             Label.text = "";
@@ -57,7 +58,7 @@ class HUDMarker : MonoBehaviour
     void Update()
     {
         if (Parent == null) return;
-        if (!FriendsAircraft.ContainsValue(Parent.unit.persistentID) || Parent?.unit.GetPlayer() == null || !Parent.unit.isActiveAndEnabled)
+        if (!FriendsAircraft.ContainsValue(Parent.unit.persistentID) || Parent?.unit.GetPlayer() == null || !Parent.unit.isActiveAndEnabled || Parent.unit.unitState > Unit.UnitState.Damaged)
         {
             Nullify();
             return;
@@ -68,6 +69,11 @@ class HUDMarker : MonoBehaviour
         Label.enabled = Parent.image.enabled && !Parent.selected && !PlayerJammed;
     }
 
+    void Hook()
+    {
+        Parent.unit.onDisableUnit += HUDMarker_OnDisable;
+    }
+
     public static HUDMarker CreateLabel(HUDUnitMarker marker)
     {
         GameObject go = new GameObject("NOXSquadMarker");
@@ -75,6 +81,7 @@ class HUDMarker : MonoBehaviour
         mark.Parent = marker;
         mark.Name = marker.unit.unitName;
         mark.Label.color = new Color(0,0,0,0);
+        mark.Hook();
         go.SetActive(true);
         return mark;
     }
@@ -92,6 +99,11 @@ class HUDMarker : MonoBehaviour
             }
         }
         Markers.Clear();
+    }
+
+    public void HUDMarker_OnDisable(Unit unit)
+    {
+        Nullify();
     }
 
     public static void RefreshLabels()

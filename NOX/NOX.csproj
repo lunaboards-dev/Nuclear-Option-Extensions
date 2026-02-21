@@ -80,13 +80,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="assets\**">
+    <None Include="assets\**" Exclude="assets\units\**;assets\beta_testers.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="assets\**" />
+    <EmbeddedResource Include="assets\**" Exclude="assets\7zr.exe" />
   </ItemGroup>
 
 

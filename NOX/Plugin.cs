@@ -37,6 +37,7 @@ public class Plugin : BaseUnityPlugin
     internal static ConfigEntry<bool> EnableSquadMarker;
     internal static ConfigEntry<bool> EnableRWRHud;
     internal static ConfigEntry<bool> EnableFriendsMenu;
+    internal static ConfigEntry<bool> EnableExperimentalFeatures;
     internal static ConfigEntry<bool> LoadExternal;
     
     internal static ConfigEntry<Color> SquadColor;
@@ -62,6 +63,7 @@ public class Plugin : BaseUnityPlugin
         EnableRWRHud = Config.Bind("Features", "Enable RWR HUD element", true);
         EnableFriendsMenu = Config.Bind("Features", "Enable join friends menu", true);
         LoadExternal = Config.Bind("Features", "Load external assets", false, "WARNING: This may break if installed from a mod manager");
+        EnableExperimentalFeatures = Config.Bind("Features", "Enable experimental features", true, "NOTE: This won't do anything if you're not a beta tester.");
 
         SquadColor = Config.Bind("Colors", "Squad Color", Color.green);
         RWRColor = Config.Bind("Colors", "RWR Color", Color.green);
