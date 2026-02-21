@@ -4,6 +4,8 @@ public class Band : IRWRSystem
 {
     //public static BandRWR Instance = new();
 
+    public bool SupportsFilters => false;
+
     public RWRThreat ThreatID(Unit unit)
     {
         var threat = Threats.IdentifyThreat(unit);

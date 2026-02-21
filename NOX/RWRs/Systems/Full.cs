@@ -2,6 +2,7 @@ namespace NOX.RWRs.Systems;
 
 public class Full : IRWRSystem
 {
+    public bool SupportsFilters => true;
     public RWRThreat ThreatID(Unit unit)
     {
         var threat = Threats.IdentifyThreat(unit);

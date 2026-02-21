@@ -2,6 +2,7 @@ namespace NOX.RWRs.Systems;
 
 public class Mask(bool PassElevation, RWRThreatType ThreatMask) : IRWRSystem
 {
+    public bool SupportsFilters => true;
     public RWRThreat ThreatID(Unit unit)
     {
         var threat = Threats.IdentifyThreat(unit);

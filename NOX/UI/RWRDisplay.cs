@@ -17,7 +17,7 @@ public class RWRDisplay : MonoBehaviour
     RawImage RWRBase;
     Dictionary<RWRContact, GameObject> Contacts = [];
     ConditionalWeakTable<Unit, RWRContact> TrackedContacts = [];
-    ConditionalWeakTable<Unit, RWRContact> TrackedMissiles = [];
+    ConditionalWeakTable<Missile, RWRContact> TrackedMissiles = [];
     public RectTransform PRt;
     public RectTransform TRPanel;
     public IRWRSystem System;

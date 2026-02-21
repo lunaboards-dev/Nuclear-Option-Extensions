@@ -1,9 +1,6 @@
-using System;
-using System.Linq;
+
 using HarmonyLib;
-using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Synthesis;
-using NOX;
 using NOX.Manager;
 
 [HarmonyPatch(typeof(WindowsTTS), nameof(WindowsTTS.Speak))]
@@ -14,8 +11,6 @@ class LinuxTTS
     public static void SetupTTS()
     {
         if (has_setup) return;
-        //Plugin.Logger.LogInfo(synth.GetInstalledVoices());
-        //synth.SelectVoice("Microsoft Sam");
 
         synth.SetOutputToDefaultAudioDevice();
         has_setup = true;

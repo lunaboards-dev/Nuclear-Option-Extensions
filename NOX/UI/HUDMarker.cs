@@ -74,7 +74,7 @@ class HUDMarker : MonoBehaviour
         HUDMarker mark = go.AddComponent<HUDMarker>();
         mark.Parent = marker;
         mark.Name = marker.unit.unitName;
-        mark.enabled = true;
+        mark.Label.color = new Color(0,0,0,0);
         go.SetActive(true);
         return mark;
     }
