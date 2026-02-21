@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "radarStation1",
+    "threat": {
+        "band": "C",
+        "type": "early warning",
+        "id": "EWR"
+    }
+}

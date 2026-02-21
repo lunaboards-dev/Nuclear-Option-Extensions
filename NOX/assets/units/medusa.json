@@ -1,0 +1,13 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "EW1",
+    "rwr": {
+        "type": "full"
+    },
+    "threat": {
+        "band": "E",
+        "type": "aew",
+        "id": "E25"
+    }
+}

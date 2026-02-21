@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "SAMTrailer1",
+    "threat": {
+        "band": "J",
+        "type": "sam",
+        "id": "R9"
+    }
+}

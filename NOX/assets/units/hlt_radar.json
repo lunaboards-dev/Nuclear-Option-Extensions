@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "HLT-R",
+    "threat": {
+        "band": "C",
+        "type": "early warning",
+        "id": "HLT"
+    }
+}

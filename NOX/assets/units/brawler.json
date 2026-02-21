@@ -1,0 +1,8 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "Fighter1",
+    "rwr": {
+        "type": "full"
+    }
+}

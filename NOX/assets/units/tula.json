@@ -1,0 +1,8 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "QuadVTOL1",
+    "rwr": {
+        "type": "helicopter"
+    }
+}

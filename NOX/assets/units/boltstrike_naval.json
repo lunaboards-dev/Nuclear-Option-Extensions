@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "SAMTurret1",
+    "threat": {
+        "band": "K",
+        "type": "sam",
+        "id": "9K4"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "RadarContainer1",
+    "threat": {
+        "band": "C",
+        "type": "sam",
+        "id": "R9"
+    }
+}

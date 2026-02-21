@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "Truck2-R",
+    "threat": {
+        "band": "C",
+        "type": "sam",
+        "id": "R9"
+    }
+}

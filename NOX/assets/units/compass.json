@@ -1,0 +1,10 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "trainer",
+    "rwr": {
+        "type": "mask",
+        "elevation": false,
+        "mask": []
+    }
+}

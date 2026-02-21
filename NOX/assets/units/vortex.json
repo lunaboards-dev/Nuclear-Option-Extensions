@@ -1,0 +1,13 @@
+{
+    "verison": 0,
+    "deftype": "unit",
+    "name": "SmallFighter1",
+    "rwr": {
+        "type": "fighter"
+    },
+    "threat": {
+        "band": "I",
+        "type": "air intercept",
+        "id": "F20"
+    }
+}
