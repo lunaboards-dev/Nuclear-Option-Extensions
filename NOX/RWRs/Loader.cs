@@ -25,6 +25,7 @@ class Loader
         public string type;
         public List<string> mask;
         public bool elevation;
+        public string name;
     }
 
     [Serializable]
@@ -117,7 +118,7 @@ class Loader
                 {
                     mask |= GetThreat(path, m);
                 }
-                IRWRSystem masked = new Systems.Mask(rwr.elevation, mask);
+                IRWRSystem masked = new Systems.Mask(rwr.elevation, rwr.name, mask);
                 RWR.AddRWR(def.name, masked);
             } else if (rwr.type != null && SystemMap.TryGetValue(rwr.type, out IRWRSystem system))
             {

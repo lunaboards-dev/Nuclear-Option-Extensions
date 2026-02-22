@@ -5,6 +5,7 @@
     "rwr": {
         "type": "mask",
         "elevation": false,
-        "mask": []
+        "mask": [],
+        "name": "SkyEye 200"
     }
 }

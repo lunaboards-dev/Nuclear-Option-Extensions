@@ -13,6 +13,7 @@ public static class Resources
     public static Texture2D RWRContact;
     public static Texture2D RWRContactLo;
     public static Texture2D RWRContactHi;
+    public static Texture2D RWRLineDash;
     public static Font Font;
     public static Font UIFont;
 
@@ -24,6 +25,8 @@ public static class Resources
         RWRContact = LoadTex("contact.png", contact_size, contact_size);
         RWRContactLo = LoadTex("contact_lo.png", contact_size, contact_size);
         RWRContactHi = LoadTex("contact_hi.png", contact_size, contact_size);
+        RWRLineDash = LoadTex("line_dash.png", 1, 30);
+        RWRLineDash.wrapMode = TextureWrapMode.Repeat;
 
         /*foreach (var F in assembly.GetManifestResourceNames())
         {

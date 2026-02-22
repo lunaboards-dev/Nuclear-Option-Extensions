@@ -4,8 +4,8 @@ namespace NOX.RWRs;
 
 static class RWR
 {
-    public static readonly Systems.Mask Helicopter = new(false, RWRThreatType.FCS | RWRThreatType.AAA | RWRThreatType.SAM | RWRThreatType.Ship);
-    public static readonly Systems.Mask Fighter = new (true, RWRThreatType.AirIntercept);
+    public static readonly Systems.Mask Helicopter = new(false, "AN/AWS-51", RWRThreatType.FCS | RWRThreatType.AAA | RWRThreatType.SAM | RWRThreatType.Ship);
+    public static readonly Systems.Mask Fighter = new (true, "AN/AWS-30", RWRThreatType.AirIntercept);
     public static readonly Systems.Band Band = new();
     public static readonly Systems.Full Full = new();
 

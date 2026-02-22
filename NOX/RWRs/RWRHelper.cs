@@ -5,7 +5,7 @@ static class RWRHelper
 {
     internal static void RadarWarning_OnRadarWarning(Aircraft.OnRadarWarning warning)
     {
-        RWRHud.Instance.Ping(warning.emitter);
+        RWRHud.Instance.Ping(warning.emitter, warning.detected, warning.isTarget);
     }
 
     internal static void onMissileWarning(MissileWarning.OnMissileWarning w)
@@ -40,6 +40,8 @@ static class RWRHelper
             if (!RWR.RWRSystems.TryGetValue(ac.name, out IRWRSystem system))
                 system = RWR.Full;
             RWRHud.Instance.System = system;
+            RWRHud.Instance.UpdateRWRDisplay();
+            RWRHud.Instance.Reset();
             ac.onRadarWarning += RadarWarning_OnRadarWarning;
             ac.GetMissileWarningSystem().onMissileWarning += onMissileWarning;
             ac.GetMissileWarningSystem().offMissileWarning += offMissileWarning;

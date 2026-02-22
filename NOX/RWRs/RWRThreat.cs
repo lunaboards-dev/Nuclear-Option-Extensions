@@ -7,4 +7,5 @@ public struct RWRThreat
     public float Distance;
     public float Elevation;
     public bool Lock;
+    public RWRThreatID Threat;
 }

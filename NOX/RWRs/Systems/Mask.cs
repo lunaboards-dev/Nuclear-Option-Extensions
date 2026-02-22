@@ -1,8 +1,10 @@
 namespace NOX.RWRs.Systems;
 
-public class Mask(bool PassElevation, RWRThreatType ThreatMask) : IRWRSystem
+public class Mask(bool PassElevation, string Name, RWRThreatType ThreatMask) : IRWRSystem
 {
     public bool SupportsFilters => true;
+    public string SystemName => Name;
+    public bool ShowContactLights => true;
     public RWRThreat ThreatID(Unit unit)
     {
         var threat = Threats.IdentifyThreat(unit);
@@ -14,7 +16,8 @@ public class Mask(bool PassElevation, RWRThreatType ThreatMask) : IRWRSystem
                 Elevation = PassElevation ? direction.Elevation : 0,
                 Direction = direction.Direction,
                 Distance = direction.Distance,
-                ID = Plugin.PlayerJammed ? Utils.RandomContact() : threat.Display
+                ID = Plugin.PlayerJammed ? Utils.RandomContact() : threat.Display,
+                Threat = threat
             };
         }
         return new()
@@ -22,7 +25,8 @@ public class Mask(bool PassElevation, RWRThreatType ThreatMask) : IRWRSystem
             Elevation = PassElevation ? direction.Elevation : 0,
             Direction = direction.Direction,
             Distance = direction.Distance,
-            ID = Plugin.PlayerJammed ? Utils.RandomLetter() : Threats.ThreatLookup[threat.Class]
+            ID = Plugin.PlayerJammed ? Utils.RandomLetter() : Threats.ThreatLookup[threat.Class],
+            Threat = threat
         };
     }
 }
