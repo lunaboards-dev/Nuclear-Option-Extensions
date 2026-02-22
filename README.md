@@ -36,7 +36,7 @@ This mod brings fully featured RWRs with threat identification (on most aircraft
 | FS-12 Revoker | I | AI | `F12` |
 | FS-20 Vortex | I | AI | `F20` |
 | EW-25 Medusa | E | AEW | `E25` |
-| KR-67 Ifrit | I | AI | `K67` |
+| KR-67 Ifrit | J | AI | `K67` |
 | SFB-81 Darkreach | J | ATK | `B81` |
 | T9K41 Boltstrike | K | SAM | `9K4` |
 | Boltstrike RAM45 Launcher | K | SAM | `9K4` |
