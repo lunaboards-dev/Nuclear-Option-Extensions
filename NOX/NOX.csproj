@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>NOX</AssemblyName>
     <Product>NOX</Product>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -69,9 +69,6 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(GameDirectory)/NuclearOption_Data/Managed/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Speech">
-      <HintPath>/storage/steam/steamapps/compatdata/2168680/pfx/drive_c/Program Files/Microsoft SDKs/Speech/v11.0/Assembly/Microsoft.Speech.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -27,6 +28,7 @@ public class Plugin : BaseUnityPlugin
     public static bool PlayerJammed;
     public static Font font;
     public static Unit LocalUnit;
+    public static NOM manager;
 
     #region Config keys
 
@@ -97,10 +99,12 @@ public class Plugin : BaseUnityPlugin
         }
         Resources.Init();
         RWRs.Loader.LoadNOXConfigs();
-        FactionHQ hq;
     }
 
     // quick and dirty hooks
-
+    void Start()
+    {
+        manager = new NOM();
+    }
     
 }

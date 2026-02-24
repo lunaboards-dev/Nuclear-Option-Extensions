@@ -16,6 +16,7 @@ public static class Resources
     public static Texture2D RWRLineDash;
     public static Font Font;
     public static Font UIFont;
+    public static Font RegularFont;
 
     public static void Init()
     {
@@ -84,6 +85,7 @@ public static class Resources
 
     public static void AllFonts()
     {
+        
         // ugly hack
         Font fnt = SceneSingleton<HeadMountedDisplay>.i?.gameObject.GetComponentInChildren<HUDApp>()?.gameObject.GetComponentInChildren<Text>().font;
         if (fnt != null)
