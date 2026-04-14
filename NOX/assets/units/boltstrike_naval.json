@@ -5,6 +5,7 @@
     "threat": {
         "band": "K",
         "type": "sam",
-        "id": "9K4"
+        "id": "9K4",
+        "group": "boltstrike"
     }
 }

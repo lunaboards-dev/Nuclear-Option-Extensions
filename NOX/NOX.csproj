@@ -44,6 +44,7 @@
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
     <PackageReference Include="HarmonyX" Version="2.9.*" />
+    <PackageReference Include="KeraLua" Version="1.4.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.6" IncludeAssets="compile" />
   </ItemGroup>
@@ -69,6 +70,9 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(GameDirectory)/NuclearOption_Data/Managed/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask">
+      <HintPath>$(GameDirectory)/NuclearOption_Data/Managed/UniTask.dll</HintPath>
     </Reference>
   </ItemGroup>
 

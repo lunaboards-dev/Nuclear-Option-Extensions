@@ -49,6 +49,7 @@ public class Plugin : BaseUnityPlugin
     internal static ConfigEntry<float> RWROffsetX;
     internal static ConfigEntry<float> RWROffsetY;
     internal static ConfigEntry<float> RWRScaling;
+    internal static ConfigEntry<int> HTTPPort;
 
     #endregion Config keys
 
@@ -74,6 +75,7 @@ public class Plugin : BaseUnityPlugin
         RWROffsetX = Config.Bind("Position", "RWR Offset X", 5f);
         RWROffsetY = Config.Bind("Position", "RWR Offset Y", 0f);
         RWRScaling = Config.Bind("Position", "RWR Distance Scale (km)", 50f);
+        LoadColorConfig();
         _harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
         _harmony.PatchAll();
 
@@ -99,6 +101,24 @@ public class Plugin : BaseUnityPlugin
         }
         Resources.Init();
         RWRs.Loader.LoadNOXConfigs();
+    }
+
+    internal static List<ConfigEntry<Color>> PlayerColors = [];
+    static readonly Color[] DefaultColors = [
+        Color.green,
+        Color.cyan,
+        Color.magenta,
+        Color.yellow,
+        new Color(1, .3f, 0),
+        new Color(.2f, 0, 1)
+    ];
+
+    void LoadColorConfig()
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            PlayerColors.Add(Config.Bind("Squad", $"Squad Color {i+1}", DefaultColors[i]));
+        }
     }
 
     // quick and dirty hooks

@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using BepInEx;
+using BepInEx.Configuration;
 using Steamworks;
+using UnityEngine;
 
 namespace NOX.Party;
 
-class PartyManager
+class PartyManager : MonoBehaviour
 {
-    HSteamListenSocket sock;
+    //HSteamListenSocket sock;
+
     void Awake()
     {
-        sock = SteamNetworkingSockets.CreateListenSocketP2P(0, 0, []);
-        
+        //sock = SteamNetworkingSockets.CreateListenSocketP2P(0, 0, []);
     }
 }

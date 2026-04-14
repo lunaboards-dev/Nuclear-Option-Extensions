@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>RWR</title>
+        <style>
+            body {
+                background-color: black;
+            }
+        </style>
+        <script>
+            let element;
+            let context;
+            let contacts = [];
+            let size;
+            let ws;
+            let scale;
+            let rad;
+            const sizes = [35, 28, 20, 10]
+            const socket = new WebSocket("ws://localhost:8111");
+
+            function drawContect(contact) {
+                const alpha = Math.max(0, (contact.time_to_die-Date.now())/3);
+                context.strokeStyle = `rgba(0,255,0,${alpha})`;
+                context.fillStyle = context.strokeStyle;
+                context.textBaseline = "middle"
+                context.textAlign = "center"
+                context.lineWidth = 3*scale
+                context.strokeStyle = "green"
+                context.setLineDash([])
+                context.font = `${sizes[Math.min(contact.id.length, 3)]} monospace`
+                context.beginPath();
+                if (context.elevation > 0) {
+                    
+                }
+            }
+
+            function drawBase() {
+                context.lineWidth = 3*scale
+                context.strokeStyle = "green"
+                context.setLineDash([])
+                context.beginPath()
+                context.arc(rad, rad, rad-(2*scale), 0, Math.PI * 2, true)
+                context.moveTo(rad-(10*scale), rad)
+                context.lineTo(rad+(10*scale), rad)
+                context.moveTo(rad, rad-(10*scale))
+                context.lineTo(rad, rad+(10*scale))
+                context.stroke()
+                context.save()
+            }
+
+            function addContact(info) {
+                info.time_to_die = Date.now()+3;
+            }
+            
+            window.onload = function() {
+                element = document.getElementById("canvas")
+                let rect = document.getElementsByTagName("body")[0].getBoundingClientRect()
+                size = Math.min(window.innerWidth, window.innerHeight)
+                element.width = size
+                element.height = size
+                context = element.getContext("2d")
+                scale = size/300;
+                rad = size/2
+                drawBase();
+                console.log(`RWR started: size: ${size}, scale: ${scale}`)
+            }
+
+            socket.addEventListener("message", (event) => {
+                
+            })
+        </script>
+    </head>
+    <body style="margin: 0">
+        <canvas id="canvas"></canvas>
+    </body>
+</html>

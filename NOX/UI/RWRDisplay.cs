@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using BepInEx;
 using NOX.RWRs;
+using NuclearOption;
 using NuclearOption.MissionEditorScripts;
 using UnityEngine;
 using UnityEngine.UI;

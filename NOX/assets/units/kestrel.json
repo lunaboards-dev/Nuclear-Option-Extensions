@@ -1,13 +1,13 @@
 {
     "verison": 0,
     "deftype": "unit",
-    "name": "fastBomber1",
+    "name": "kestrel",
     "rwr": {
         "type": "full"
-    },
+	},
     "threat": {
         "band": "J",
-        "type": "attacker",
-        "id": "AB4"
+        "type": "air intercept",
+        "id": "106"
     }
 }

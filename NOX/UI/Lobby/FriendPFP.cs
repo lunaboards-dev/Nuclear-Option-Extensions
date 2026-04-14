@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Steamworks;
 using NuclearOption.MissionEditorScripts;
+using NuclearOption;
 
 namespace NOX.UI.Lobby;
 
