@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>NOX</AssemblyName>
     <Product>NOX</Product>
-    <Version>0.3.2</Version>
+    <Version>0.3.3</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -93,7 +93,7 @@
 
   <Target Name="CleanUpOutputDirectory" AfterTargets="Build">
     <ItemGroup>
-      <FilesToDelete Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll;$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)Microsoft.Speech.dll" />
+      <FilesToDelete Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll;$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)KeraLua.dll" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
