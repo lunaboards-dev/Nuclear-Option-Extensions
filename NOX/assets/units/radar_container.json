@@ -6,6 +6,6 @@
         "band": "C",
         "type": "sam",
         "id": "R9",
-        "group": "r9"
+        "groups": ["early warning", "radar container", "sam", "r9"]
     }
 }

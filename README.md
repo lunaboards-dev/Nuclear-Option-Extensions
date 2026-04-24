@@ -48,3 +48,6 @@ This mod brings fully featured RWRs with threat identification (on most aircraft
 | Radar Station | C | EWR | `EWR` |
 
 **Note**: All ships show up as NVL or F band. All threats not added to the library show up as `?` or H band.
+
+## Loading external assets
+To enable the loading of external assets, make a text file called "nox_load_external" and put the name of the 37th President of the United States.

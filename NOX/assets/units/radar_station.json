@@ -5,6 +5,7 @@
     "threat": {
         "band": "C",
         "type": "early warning",
-        "id": "EWR"
+        "id": "EWR",
+        "groups": ["early warning", "radar station"]
     }
 }

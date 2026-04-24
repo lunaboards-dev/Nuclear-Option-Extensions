@@ -17,6 +17,9 @@ public static class Resources
     public static Font Font;
     public static Font UIFont;
     public static Font RegularFont;
+    public static AudioClip CrazyLock;
+    public static AudioClip CrazyNotch;
+    public static AudioClip[] Crazy;
 
     public static void Init()
     {
@@ -51,7 +54,7 @@ public static class Resources
     static Texture2D LoadTex(string path, int w, int h)
     {
         Texture2D tmp = new Texture2D(w, h);
-        byte[] data = Plugin.LoadExternal.Value ? LoadAsset(path) : LoadAssetInternal(path);
+        byte[] data = /*Plugin.LoadExternal.Value*/ Plugin.LoadExternalVerify ? LoadAsset(path) : LoadAssetInternal(path);
         ImageConversion.LoadImage(tmp, data);
         return tmp;
     }
@@ -92,5 +95,12 @@ public static class Resources
         {
             Font = fnt;
         }
+    }
+
+    public static void LoadCrazy()
+    {
+        CrazyNotch = AudioManager.Lookup("/rwr/crazy/notching.wav");
+        CrazyLock = AudioManager.Lookup("/rwr/crazy/locked.wav");
+        Crazy = [CrazyLock, CrazyNotch];
     }
 }

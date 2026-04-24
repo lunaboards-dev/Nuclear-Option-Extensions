@@ -81,19 +81,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="assets\**" Exclude="assets\units\**;assets\beta_testers.txt">
+    <None Include="assets\**" Exclude="assets\units\**;assets\beta_testers.txt;assets\lua54.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\lua54.dll">
+      <Link>lua54.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="assets\**" Exclude="assets\7zr.exe" />
+    <EmbeddedResource Include="assets\**" Exclude="assets\7zr.exe;assets\lua54.dll;assets\audio\**" />
   </ItemGroup>
 
 
   <Target Name="CleanUpOutputDirectory" AfterTargets="Build">
     <ItemGroup>
-      <FilesToDelete Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll;$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)KeraLua.dll" />
+      <FilesToDelete Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll;$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)KeraLua.dll;$(OutputPath)lua54.dll" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>

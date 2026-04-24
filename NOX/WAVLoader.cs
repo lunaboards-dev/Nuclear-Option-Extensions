@@ -1,0 +1,6 @@
+namespace NOX;
+
+class WAVLoader
+{
+    
+}

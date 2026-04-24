@@ -8,6 +8,7 @@
     "threat": {
         "band": "I",
         "type": "air intercept",
-        "id": "F12"
+        "id": "F12",
+        "groups": ["fighter", "fs12", "bdf"]
     }
 }

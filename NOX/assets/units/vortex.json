@@ -3,11 +3,12 @@
     "deftype": "unit",
     "name": "SmallFighter1",
     "rwr": {
-        "type": "fighter"
+        "type": "full"
     },
     "threat": {
         "band": "I",
         "type": "air intercept",
-        "id": "F20"
+        "id": "F20",
+        "groups": ["fighter", "fs20", "bdf"]
     }
 }

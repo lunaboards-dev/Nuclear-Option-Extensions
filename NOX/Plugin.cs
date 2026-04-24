@@ -11,6 +11,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using NOX.Hooks;
 using NOX.Manager;
+using NOX.Scripting;
 using NuclearOption.Networking;
 using Steamworks;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace NOX;
 public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
+    internal static new ManualLogSource LuaLogger;
     internal static List<ulong> Friends = [];
     internal static Dictionary<ulong, PersistentID> FriendsAircraft = [];
     private Harmony _harmony;
@@ -40,7 +42,9 @@ public class Plugin : BaseUnityPlugin
     internal static ConfigEntry<bool> EnableRWRHud;
     internal static ConfigEntry<bool> EnableFriendsMenu;
     internal static ConfigEntry<bool> EnableExperimentalFeatures;
-    internal static ConfigEntry<bool> LoadExternal;
+    //internal static ConfigEntry<bool> LoadExternal;
+    internal static ConfigEntry<string> LoadExternalChallenge;
+    internal static bool LoadExternalVerify => LoadExternalChallenge.Value.Trim().ToLower() == "richard nixon";
     
     internal static ConfigEntry<Color> SquadColor;
     internal static ConfigEntry<int> FontSize;
@@ -61,11 +65,13 @@ public class Plugin : BaseUnityPlugin
         Instance = this;
         // Plugin startup logic
         Logger = base.Logger;
+        LuaLogger = BepInEx.Logging.Logger.CreateLogSource("NOX.Scripting");
 
         EnableSquadMarker = Config.Bind("Features", "Enable squad marker", true);
         EnableRWRHud = Config.Bind("Features", "Enable RWR HUD element", true);
         EnableFriendsMenu = Config.Bind("Features", "Enable join friends menu", true);
-        LoadExternal = Config.Bind("Features", "Load external assets", false, "WARNING: This may break if installed from a mod manager");
+        //LoadExternal = Config.Bind("Features", "Load external assets", false, "WARNING: This may break if installed from a mod manager");
+        LoadExternalChallenge = Config.Bind("Features", "Load external assets (Challenge)", "FIGURE OUT THE VALUE FROM THE README", "WARNING: This may break if installed from a mod manager");
         EnableExperimentalFeatures = Config.Bind("Features", "Enable experimental features", true, "NOTE: This won't do anything if you're not a beta tester.");
 
         SquadColor = Config.Bind("Colors", "Squad Color", Color.green);
@@ -100,6 +106,8 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning("Steam API not initalized yet, retrying on hook...");
         }
         Resources.Init();
+        AudioManager.Build();
+        ScriptEnv.Setup();
         RWRs.Loader.LoadNOXConfigs();
     }
 
