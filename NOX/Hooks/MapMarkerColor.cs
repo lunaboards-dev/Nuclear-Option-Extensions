@@ -8,6 +8,7 @@ static public class MapMarkerColor
 {
     static void Postfix(UnitMapIcon __instance)
     {
+        if (!Plugin.Squads) return;
         if (DynamicMap.GetFactionMode(__instance.unit.NetworkHQ) == FactionMode.Friendly &&
             Plugin.FriendsAircraft.ContainsValue(__instance.unit.persistentID))
         {
