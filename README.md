@@ -2,7 +2,7 @@
 
 ## Troubleshooting
 
-**FIRST:** Try disabling mods by Hellcat92. These appear to cause issues with other mods, for whatever reason.
+**FIRST:** Try disabling mods by Hellcat92, or any other mod that doesn't have public source code. No source = no support.
 
 ## Squad markers
 

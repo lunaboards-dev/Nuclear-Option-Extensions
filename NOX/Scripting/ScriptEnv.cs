@@ -62,7 +62,7 @@ public class ScriptEnv : Lua
     private static List<ScriptLib> Libs = [];
     internal static void Setup()
     {
-        var ass = Assembly.GetExecutingAssembly();
+        /* var ass = Assembly.GetExecutingAssembly();
         var funcs = from type in ass.GetTypes()
                     from method in type.GetMethods()
                     where method.IsDefined(typeof(LuaCallAttribute)) && method.IsStatic
@@ -84,7 +84,7 @@ public class ScriptEnv : Lua
             found:
             lib.AddCall(lattr.name, (ScriptFunction) func.CreateDelegate(typeof(ScriptFunction)));
         }
-        Plugin.Logger.LogInfo($"Lua environments ready with {Libs.Count} libraries loaded.");
+        Plugin.Logger.LogInfo($"Lua environments ready with {Libs.Count} libraries loaded.");*/
     }
     public ScriptEnv(string context) : base()
     {
