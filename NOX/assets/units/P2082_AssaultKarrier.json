@@ -1,0 +1,13 @@
+{
+    "version": 0,
+    "deftype": "unit",
+    "name": "AssaultKarrier",
+    "threat": {
+        "band": "F",
+        "type": "naval",
+        "id": "NVL"
+    },
+    "rwr": {
+        "type": "full"
+    }
+}

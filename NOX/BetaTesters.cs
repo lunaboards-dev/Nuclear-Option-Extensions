@@ -9,7 +9,7 @@ class BetaTesters
 
     internal static void LoadBetaTesters()
     {
-        Stream str = Resources.GetStream("NOX.assets.beta_testers.txt");
+        /* Stream str = Resources.GetStream("NOX.assets.beta_testers.txt");
         if (str == null) return;
         using var reader = new StreamReader(str);
         string line;
@@ -21,13 +21,13 @@ class BetaTesters
                 ulong id = ulong.Parse(line);
                 testers.Add(id);
             }
-        }
+        } */
     }
 
     public static bool IsTester(ulong id)
     {
-        return Plugin.EnableExperimentalFeatures.Value && testers.Contains(id);
+        return Plugin.EnableExperimentalFeatures.Value; //&& testers.Contains(id);
     }
 
-    public static bool LocalIsTester => Steam.ID > 0 && IsTester(Steam.ID);
+    public static bool LocalIsTester => true;//Steam.ID > 0 && IsTester(Steam.ID);
 }

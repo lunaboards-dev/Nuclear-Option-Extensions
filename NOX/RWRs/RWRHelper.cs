@@ -35,6 +35,7 @@ static class RWRHelper
             Plugin.Logger.LogWarning("Aircraft is null, so we'll try again later.");
             return;
         };
+        Plugin.LocalUnit = ac; // what the fuck?
         Plugin.Logger.LogInfo($"Local aircraft: unit = {ac.unitName}, unique = {ac.UniqueName}, name = {ac.name}, map unique = {ac.MapUniqueName}");
         if (RWRHud.Instance != null) {
             if (!RWR.RWRSystems.TryGetValue(ac.name, out IRWRSystem system))

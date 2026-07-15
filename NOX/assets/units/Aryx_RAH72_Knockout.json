@@ -1,0 +1,8 @@
+{
+    "version": 0,
+    "deftype": "unit",
+    "name": "Aryx_LightHelicopter1",
+    "rwr": {
+        "type": "helicopter"
+    }
+}

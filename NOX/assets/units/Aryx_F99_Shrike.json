@@ -1,0 +1,13 @@
+{
+    "version": 0,
+    "deftype": "unit",
+    "name": "Aryx_LightFighter1",
+    "threat": {
+        "band": "I",
+        "type": "air intercept",
+        "id": "F99"
+    },
+    "rwr": {
+        "type": "fighter"
+    }
+}

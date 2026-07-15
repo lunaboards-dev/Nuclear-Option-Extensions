@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NOX.Hooks;
 
-[HarmonyPatch]
+/* [HarmonyPatch]
 public class MAWSoundOverride
 {
     static Type ThreatListClass = typeof(ThreatList);
@@ -47,4 +47,4 @@ public class MAWSoundOverride
         }
         return true;
     }
-}
+} */
