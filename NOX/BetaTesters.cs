@@ -26,8 +26,8 @@ class BetaTesters
 
     public static bool IsTester(ulong id)
     {
-        return Plugin.EnableExperimentalFeatures.Value; //&& testers.Contains(id);
+        return false; //Plugin.EnableExperimentalFeatures.Value; //&& testers.Contains(id);
     }
 
-    public static bool LocalIsTester => true;//Steam.ID > 0 && IsTester(Steam.ID);
+    public static bool LocalIsTester => false;//Steam.ID > 0 && IsTester(Steam.ID);
 }
