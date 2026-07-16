@@ -1,7 +1,7 @@
 {
     "verison": 0,
     "deftype": "unit",
-    "name": "fastBomber1",
+    "name": "FastBomber1",
     "rwr": {
         "type": "full"
     },
