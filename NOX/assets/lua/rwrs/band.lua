@@ -17,11 +17,11 @@ function RWR:init()
 end
 
 function RWR:update()
-
+    
 end
 
 function RWR:contact(con)
-    local cinfo = self.self.contacts[con.id]
+    local cinfo = self.contacts[con.id]
     if cinfo then
         cinfo.con.lock = con.lock
         cinfo.ttd = game.leveltime()+3

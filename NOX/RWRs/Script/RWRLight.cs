@@ -14,15 +14,14 @@ public class RWRLight : MonoBehaviour
 
     void Push(ScriptEnv L)
     {
-        L.PushObject(this);
-        L.SetMetaTable("RWRLight");
+        L.PushGCTrackedObject(this, "RWRLight");
     }
 
     // position(x, y)
     [LuaCall("RWRLight", "position", true)]
     public static int lua_cpos(ScriptEnv L)
     {
-        var light = L.CheckObject<RWRLight>(1, "RWRLight");
+        var light = L.CheckGCTrackedObject<RWRLight>(1, "RWRLight");
         var x = L.CheckNumber(2);
         var y = L.CheckNumber(3);
         light.transform.AsRectTransform().anchoredPosition = new UnityEngine.Vector2((float)x, (float)y);
@@ -33,7 +32,7 @@ public class RWRLight : MonoBehaviour
     [LuaCall("RWRLight", "label", true)]
     public static int lua_text(ScriptEnv L)
     {
-        var light = L.CheckObject<RWRLight>(1, "RWRLight");
+        var light = L.CheckGCTrackedObject<RWRLight>(1, "RWRLight");
         if (L.GetTop() == 2)
         {
             light.text.text = L.CheckString(2);
@@ -45,7 +44,7 @@ public class RWRLight : MonoBehaviour
     [LuaCall("RWRLight", "color", true)]
     public static int lua_color(ScriptEnv L)
     {
-        var light = L.CheckObject<RWRLight>(1, "RWRLight");
+        var light = L.CheckGCTrackedObject<RWRLight>(1, "RWRLight");
         var r = L.CheckNumber(2);
         var g = L.CheckNumber(3);
         var b = L.CheckNumber(4);

@@ -20,6 +20,6 @@ function RWR:init()
     end
 end
 
-function RWR:contact(con)
+function RWR:contact(src)
     
 end

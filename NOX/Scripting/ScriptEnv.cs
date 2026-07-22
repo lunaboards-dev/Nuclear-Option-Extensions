@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using KeraLua;
 
@@ -11,6 +12,29 @@ namespace NOX.Scripting;
 public class ScriptEnv : Lua
 {
     public delegate int ScriptFunction(ScriptEnv L);
+
+    static int FreeGCHandle(nint ptr)
+    {
+        ScriptEnv env = (ScriptEnv) FromIntPtr(ptr);
+        nint obj = env.ToUserData(1);
+        unsafe
+        {
+            nint * gchand = (nint*)obj;
+            GCHandle.FromIntPtr(*gchand).Free();
+        }
+        return 0;
+    }
+
+    static LuaFunction FreeGCHandDel = FreeGCHandle;
+
+    unsafe static void AllocGCHandle<T>(ScriptEnv L, T obj)
+    {
+        var hand = GCHandle.Alloc(obj);
+        nint box = L.NewUserData(sizeof(nint));
+        nint * ptr = (nint *)box;
+        *ptr = GCHandle.ToIntPtr(hand);
+    }
+
     private class ScriptLib
     {
         public string Name;
@@ -23,6 +47,7 @@ public class ScriptEnv : Lua
             Metatable = m;
             Plugin.Logger.LogDebug($"New library: {n} ({c})");
         }
+
         Dictionary<string, LuaFunction> Funcs = [];
 
         public void AddCall(string name, ScriptFunction fun)
@@ -53,6 +78,9 @@ public class ScriptEnv : Lua
             if (Metatable)
             {
                 env.SetTable(-3);
+                env.PushString("__gc");
+                env.PushCFunction(FreeGCHandDel);
+                env.SetTable(-3);
                 env.Pop(1);
             } else
                 env.SetGlobal(Name);
@@ -62,7 +90,7 @@ public class ScriptEnv : Lua
     private static List<ScriptLib> Libs = [];
     internal static void Setup()
     {
-        /* var ass = Assembly.GetExecutingAssembly();
+        var ass = Assembly.GetExecutingAssembly();
         var funcs = from type in ass.GetTypes()
                     from method in type.GetMethods()
                     where method.IsDefined(typeof(LuaCallAttribute)) && method.IsStatic
@@ -79,12 +107,12 @@ public class ScriptEnv : Lua
                     goto found;
                 }
             }
-            lib = new ScriptLib(lattr.lib, lattr.ctx);
+            lib = new ScriptLib(lattr.lib, lattr.ctx, lattr.meta);
             Libs.Add(lib);
             found:
             lib.AddCall(lattr.name, (ScriptFunction) func.CreateDelegate(typeof(ScriptFunction)));
         }
-        Plugin.Logger.LogInfo($"Lua environments ready with {Libs.Count} libraries loaded.");*/
+        Plugin.Logger.LogInfo($"Lua environments ready with {Libs.Count} libraries loaded.");
     }
     public ScriptEnv(string context) : base()
     {
@@ -106,12 +134,34 @@ public class ScriptEnv : Lua
         return LoadString(src, path);
     }
 
-    public void PushCSFunction(ScriptFunction func)
+    public LuaFunction PushCSFunction(ScriptFunction func)
     {
-        PushCFunction((Lptr) =>
+        LuaFunction del = (Lptr) =>
         {
             ScriptEnv env = (ScriptEnv)FromIntPtr(Lptr);
             return func(env);
-        });
+        };
+        PushCFunction(del);
+        return del;
+    }
+
+    public void PushGCTrackedObject<T>(T obj, string metatable)
+    {
+        AllocGCHandle(this, obj);
+        SetMetaTable(metatable);
+    }
+
+    public T CheckGCTrackedObject<T>(int idx, string metatable)
+    {
+        nint box = CheckUserData(idx, metatable);
+        if (box == 0) return default;
+        unsafe {
+            var ptr = (nint*)box;
+            var hand = *ptr;
+            if (hand == 0) return default;
+            var gch = GCHandle.FromIntPtr(hand);
+            if (!gch.IsAllocated) return default;
+            return (T)gch.Target;
+        }
     }
 }
